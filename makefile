@@ -1,11 +1,13 @@
 CLIENT=CoopProcessClient
 SERVER=CoopProcessServer
 
+VERSION=c++11
+
 client_comp: src/client.cpp
-	gcc -c src/client.cpp -o obj/client.o
+	gcc -std=$(VERSION) -c src/client.cpp -o obj/client.o
 
 server_comp: src/server.cpp
-	gcc -c src/server.cpp -o obj/server.o
+	gcc -std=$(VERSION) -c src/server.cpp -o obj/server.o
 
 # There might be a shared compilation
 
