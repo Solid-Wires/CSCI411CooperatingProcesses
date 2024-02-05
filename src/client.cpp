@@ -35,7 +35,7 @@ that name to reply.
 *****************************************************************************/
 int main ()
 
-    mqd_t qd_server, qd_client;   // queue descriptors
+    //mqd_t qd_server, qd_client;   // queue descriptors
 
 
     // create the client queue for receiving messages from server
