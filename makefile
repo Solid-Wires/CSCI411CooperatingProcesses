@@ -2,16 +2,16 @@ CLIENT=CoopProcessClient
 SERVER=CoopProcessServer
 
 # There we go, now it's compiling to the right version
-VERSION=c++11
+VERSION=-std=c++11
 REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 
 all: programs
 
 client_comp: src/client.cpp
-	gcc -std=$(VERSION) -c src/client.cpp -o obj/client.o
+	gcc $(VERSION) -c src/client.cpp -o obj/client.o
 
 server_comp: src/server.cpp
-	gcc -std=$(VERSION) -c src/server.cpp -o obj/server.o
+	gcc $(VERSION) -c src/server.cpp -o obj/server.o
 
 # There might be a shared compilation
 
