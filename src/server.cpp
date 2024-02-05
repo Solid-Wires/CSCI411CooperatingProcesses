@@ -33,7 +33,9 @@ that name to reply.
 
 int main ()
 {
-    mqd_t qd_server, qd_client;   // queue descriptors
+    // queue descriptors
+    mqd_t qd_server;
+    mqd_t qd_client;
     
 	// Build message queue attribute structure passed to the mq open
     struct mq_attr attr;
