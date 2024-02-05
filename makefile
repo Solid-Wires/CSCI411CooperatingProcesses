@@ -3,7 +3,7 @@ SERVER=CoopProcessServer
 
 # There we go, now it's compiling to the right version
 VERSION=c++11
-REAL_TIME_LIBRARY=-lrt
+REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 
 all: programs
 
