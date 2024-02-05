@@ -1,7 +1,9 @@
 CLIENT=CoopProcessClient
 SERVER=CoopProcessServer
 
+# There we go, now it's compiling to the right version
 VERSION=c++11
+REAL_TIME_LIBRARY=-lrt
 
 all: programs
 
@@ -14,8 +16,8 @@ server_comp: src/server.cpp
 # There might be a shared compilation
 
 programs: client_comp server_comp
-	g++ obj/client.o -o $(CLIENT)
-	g++ obj/server.o -o $(SERVER)
+	g++ obj/client.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
+	g++ obj/server.o -o $(SERVER) $(REAL_TIME_LIBRARY)
 
 .PHONY: clean
 clean:
