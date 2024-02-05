@@ -34,9 +34,10 @@ The message received also has the name of the client mailbox.  The server uses
 that name to reply.
 *****************************************************************************/
 int main ()
-
-    //mqd_t qd_server, qd_client;   // queue descriptors
-
+{
+    // queue descriptors
+    mqd_t qd_server;
+    mqd_t qd_client;
 
     // create the client queue for receiving messages from server
 	// use the client PID to help differentiate it from other queues with similar names
@@ -49,7 +50,6 @@ int main ()
     
 	// Build message queue attribute structure passed to the mq open
     struct mq_attr attr;
-
 		attr.mq_flags = 0;
 		attr.mq_maxmsg = MAX_MESSAGES;
 		attr.mq_msgsize = MAX_MSG_SIZE;
