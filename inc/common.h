@@ -10,6 +10,7 @@
 #include <cstring>
 #include <iostream>
 #include <unistd.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <sys/stat.h>
