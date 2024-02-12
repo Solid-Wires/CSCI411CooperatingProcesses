@@ -7,6 +7,4 @@ using namespace std;
 int main() {
     // Queue descriptors
     mqd_t qd_server, qd_client;
-
-    cout << "io stream still available?" << '\n';
 }
