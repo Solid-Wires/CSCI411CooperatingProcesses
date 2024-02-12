@@ -19,7 +19,8 @@
 #include <iostream>
 
 // DEFINE THE SERVER NAME AN DEFAULT VALUES FOR THE MESSAGE QUEUE
-#define SERVER_QUEUE_NAME   "/coop-processes-server"
+#define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
+#define CLIENT_QUEUE_NAME   "/jw-coop-process-client-"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
 #define MAX_MESSAGES 10
 #define MAX_MSG_SIZE 256
@@ -45,7 +46,8 @@ int main ()
     //  EDIT: From testing somewhere else, strcpy does NOT add the null terminating string.
     //      Was this a red herring?
     char client_queue_name [64];
-	string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
+    sprintf(client_queue_name, CLIENT_QUEUE_NAME + "%d", getpid());
+	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
     //string  str_client_queue_name = "/coop-processes-client-test";
 	strcpy(client_queue_name, str_client_queue_name.c_str());
