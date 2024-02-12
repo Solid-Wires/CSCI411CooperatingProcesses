@@ -15,8 +15,6 @@
 #include <cstring>
 #include <iostream>
 
-#include <assert.h>
-
 // DEFINE THE SERVER NAME AN DEFAULT VALUES FOR THE MESSAGE QUEUE
 #define SERVER_QUEUE_NAME   "/coop-processes-server"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
@@ -85,7 +83,7 @@ int main ()
 
         // The following copies an integer (token) into the c-string that is the output buffer
 		sprintf(out_buffer, "%d", token_number);
-        assert(qd_client != NULL);
+        cout << in_buffer << '\n';
 
         // Send the message to the client's mailbox/mailqueue
 		if (mq_send (qd_client, out_buffer, strlen (out_buffer), 0) == -1) {
