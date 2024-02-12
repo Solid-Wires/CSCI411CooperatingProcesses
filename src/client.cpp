@@ -43,15 +43,10 @@ int main ()
 	// use the client PID to help differentiate it from other queues with similar names
 	// the queue name must be a null-terminated c-string.
 	// strcpy makes that happen
-    //  EDIT: From testing somewhere else, strcpy does NOT add the null terminating string.
-    //      Was this a red herring?
     char client_queue_name [64];
     string str_client_queue_name = CLIENT_QUEUE_NAME;
     str_client_queue_name += "%d";
     sprintf(client_queue_name, str_client_queue_name.c_str(), getpid());
-	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
-	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
-    //string  str_client_queue_name = "/coop-processes-client-test";
 
 	// Build message queue attribute structure passed to the mq open
     struct mq_attr attr;
@@ -75,6 +70,8 @@ int main ()
         exit (1);
     }
 
+    cout << "client queue name: " << client_queue_name;
+    cout << "length of name: " << strlen(client_queue_name) << '\n';
 
 // Loop while the enter key is pressed after the prompt to:
     printf ("Ask for a token (Press <ENTER>): ");
