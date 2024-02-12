@@ -45,9 +45,9 @@ int main ()
     //  EDIT: From testing somewhere else, strcpy does NOT add the null terminating string.
     //      Was this a red herring?
     char client_queue_name [64];
-	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
+	string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
-    string  str_client_queue_name = "/coop-processes-client-test";
+    //string  str_client_queue_name = "/coop-processes-client-test";
 	strcpy(client_queue_name, str_client_queue_name.c_str());
     
 	// Build message queue attribute structure passed to the mq open
@@ -80,14 +80,14 @@ int main ()
         // Send message to server
 		//  Data sent is the client's message queue name
         if (mq_send (qd_server, client_queue_name , strlen(client_queue_name), 0) == -1) {
-             cerr<<"Client: Not able to send message to server";
+            cerr<<"Client: Not able to send message to server";
             continue;
         }
 
         // Receive response from server
 		// Message received is the token
         if (mq_receive (qd_client, in_buffer, MSG_BUFFER_SIZE, NULL) == -1) {
-             cerr<<"Client: mq_receive";
+            cerr<<"Client: mq_receive";
             exit (1);
         }
         // display token received from server
