@@ -22,10 +22,17 @@ int main() {
 
     cout << "Shutting down server mq..." << '\n';
 
+    // Finish use by closing the mq.
+    if (mq_close(qd_server) == -1) {
+        cerr << "Could not close the server mq!" << '\n';
+        exit(1);
+    }
     // Unlink the server (delete the message queue).
-    if (mq_unlink(SERVER_QUEUE_NAME) != -1) {
+    //  Since it's no longer needed in the filesystem.
+    if (mq_unlink(SERVER_QUEUE_NAME) == -1) {
         cerr << "Could not delete the server mq!" << '\n';
         exit(1);
     }
+    
     cout << "Successfully shut down the server mq." << '\n';
 }
