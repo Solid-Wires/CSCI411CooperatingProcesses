@@ -17,6 +17,8 @@
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
 
+// The attr struct will be shared between both instances
+//  No real reason to make them different
 struct mq_attr attr = {
     .mq_flags = 0,
     .mq_maxmsg = MAX_MESSAGES,
