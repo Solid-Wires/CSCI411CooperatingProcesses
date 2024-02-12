@@ -79,6 +79,7 @@ int main ()
 
         // Send message to server
 		//  Data sent is the client's message queue name
+        //  strlen(client_queue_name) + 1 TO INCLUDE THE TERMINATING CHARACTER???
         if (mq_send (qd_server, client_queue_name , strlen(client_queue_name) + 1, 0) == -1) {
             cerr<<"Client: Not able to send message to server";
             continue;
