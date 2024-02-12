@@ -1,6 +1,13 @@
 #ifndef JW_COOPPROCESSES_COMMON
 #define JW_COOPPROCESSES_COMMON
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <mqueue.h>
+#include <cstring>
+#include <iostream>
+
 // Definitions shard between the client and server.
 #define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
