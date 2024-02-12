@@ -41,7 +41,7 @@ struct mq_attr attr = {
 
 // Shorthand for the if-statement check when the mq result == -1.
 //  Which means it failed. Prints off why and closes the application.
-void mq_assert(int code, string why) {
+void mq_assert(int code, std::string why) {
     if (code == -1) {
         std::cerr << why << '\n';
         exit(1);
