@@ -47,7 +47,7 @@ int main ()
     char client_queue_name [64];
 	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
-    string  str_client_queue_name = "/coop-processes-client-test" + "\\0'";
+    string  str_client_queue_name = "/coop-processes-client-test" + "\\0";
 	strcpy(client_queue_name, str_client_queue_name.c_str());
     
 	// Build message queue attribute structure passed to the mq open
