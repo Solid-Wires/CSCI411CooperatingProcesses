@@ -45,5 +45,5 @@ int main() {
     }
     
     // Shutdown the server.
-    shutdown_server_mq();
+    shutdown_server_mq(0);
 }
