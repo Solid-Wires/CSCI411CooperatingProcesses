@@ -8,10 +8,10 @@ REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 all: programs
 
 client_comp: src/client.cpp
-	gcc $(VERSION) -c src/client.cpp -o obj/client.o
+	gcc $(VERSION) -c src/client.cpp -o obj/client.o $(REAL_TIME_LIBRARY)
 
 server_comp: src/server.cpp
-	gcc $(VERSION) -c src/server.cpp -o obj/server.o
+	gcc $(VERSION) -c src/server.cpp -o obj/server.o $(REAL_TIME_LIBRARY)
 
 # There might be a shared compilation
 
