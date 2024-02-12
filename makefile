@@ -1,5 +1,5 @@
-CLIENT=CoopProcessClient
-SERVER=CoopProcessServer
+CLIENT=client
+SERVER=server
 
 # There we go, now it's compiling to the right version
 VERSION=-std=c++11
