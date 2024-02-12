@@ -19,13 +19,9 @@ int main() {
 
     // }
 
-    // Close the server.
-    if (mq_unlink(SERVER_QUEUE_NAME) == -1) {
-        cerr << "Could not unlink the server mq!";
-        exit(1);
-    }
-    if (mq_close(qd_server) != -1) {
-        cerr << "Could not close the server mq!";
+    // Unlink the server (delete the message queue).
+    if (mq_unlink(SERVER_QUEUE_NAME) != -1) {
+        cerr << "Could not delete the server mq!";
         exit(1);
     }
     cout << "Successfully shut down the server mq." << '\n';
