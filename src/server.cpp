@@ -57,6 +57,14 @@ int main ()
         cerr << "Server: mq_open (server)";
         exit (1);
     }
+
+    // Open the client's mailbox
+    //  (this was checking against 1... Typo?)
+    //  YES IT WAS. THIS WAS THE REASON WHY IT WASN'T SENDING.
+    if ((qd_client = mq_open (in_buffer, O_WRONLY)) == -1) {
+        cerr << "Server: Not able to open client queue";
+        continue;
+    }
 	
 	// Loop forever waiting for a request for a token
     while (1) {
@@ -74,14 +82,6 @@ int main ()
         // SEND REPLY MESSAGE TO CLIENT'S MAILBOX
 		// The message received, contains the name of the client's mailbox.
 		// That name is saved in the input buffer.
-
-		// Open the client's mailbox
-        //  (this was checking against 1... Typo?)
-        //  YES IT WAS. THIS WAS THE REASON WHY IT WASN'T SENDING.
-        if ((qd_client = mq_open (in_buffer, O_WRONLY)) == -1) {
-            cerr << "Server: Not able to open client queue";
-            continue;
-        }
 
         // The following copies an integer (token) into the c-string that is the output buffer
 		sprintf(out_buffer, "%d", token_number);
