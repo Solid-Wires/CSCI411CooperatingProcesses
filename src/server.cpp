@@ -64,7 +64,7 @@ int main ()
 		// RECEIVE THE MESSAGE FROM SERVER MAILBOX
         // get the oldest message with highest priority
 		// Note: this synchronous receive will wait until a message is in the queue
-        if (mq_receive (qd_server, in_buffer, MSG_BUFFER_SIZE, NULL) == -1) {
+        if (mq_receive (qd_server, in_buffer, MSG_BUFFER_SIZE - 2, NULL) == -1) {
             cerr << "Server: mq_receive";
             exit (1);
         }
