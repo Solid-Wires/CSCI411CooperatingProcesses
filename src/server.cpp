@@ -5,8 +5,9 @@
 using namespace std;
 
 int main() {
-    
+
     // Open and create the server message queue
+    cout << "Opening server mq..." << '\n';
     if ((qd_server = mq_open (SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)) == -1) {
         cerr << "Server: mq_open (server)";
         exit (1);
@@ -19,9 +20,11 @@ int main() {
 
     // }
 
+    cout << "Shutting down server mq..." << '\n';
+
     // Unlink the server (delete the message queue).
     if (mq_unlink(SERVER_QUEUE_NAME) != -1) {
-        cerr << "Could not delete the server mq!";
+        cerr << "Could not delete the server mq!" << '\n';
         exit(1);
     }
     cout << "Successfully shut down the server mq." << '\n';
