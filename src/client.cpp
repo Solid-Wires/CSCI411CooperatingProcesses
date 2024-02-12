@@ -42,6 +42,8 @@ int main ()
 	// use the client PID to help differentiate it from other queues with similar names
 	// the queue name must be a null-terminated c-string.
 	// strcpy makes that happen
+    //  EDIT: From testing somewhere else, strcpy does NOT add the null terminating string.
+    //      Was this a red herring?
     char client_queue_name [64];
 	string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
