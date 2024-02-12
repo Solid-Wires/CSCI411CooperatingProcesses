@@ -84,8 +84,6 @@ int main ()
         // The following copies an integer (token) into the c-string that is the output buffer
 		sprintf(out_buffer, "%d", token_number);
 
-        cout << out_buffer;
-
         // Send the message to the client's mailbox/mailqueue
 		if (mq_send (qd_client, out_buffer, strlen (out_buffer) + 1, 0) == -1) {
             cerr << "Server: Not able to send message to client";
