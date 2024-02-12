@@ -70,7 +70,7 @@ int main ()
         exit (1);
     }
 
-    cout << "client queue name: " << client_queue_name;
+    cout << "client queue name: " << client_queue_name << '\n';
     cout << "length of name: " << strlen(client_queue_name) << '\n';
 
 // Loop while the enter key is pressed after the prompt to:
@@ -79,7 +79,7 @@ int main ()
 
         // Send message to server
 		//  Data sent is the client's message queue name
-        if (mq_send (qd_server, client_queue_name , strlen(client_queue_name), 0) == -1) {
+        if (mq_send (qd_server, client_queue_name , strlen(client_queue_name) + 1, 0) == -1) {
             cerr<<"Client: Not able to send message to server";
             continue;
         }
