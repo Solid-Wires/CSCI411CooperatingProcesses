@@ -39,4 +39,13 @@ struct mq_attr attr = {
     .mq_curmsgs = 0
 };
 
+// Shorthand for the if-statement check when the mq result == -1.
+//  Which means it failed. Prints off why and closes the application.
+void mq_assert(int code, string why) {
+    if (code == -1) {
+        err << why << '\n';
+        exit(1);
+    }
+}
+
 #endif

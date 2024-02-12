@@ -8,31 +8,31 @@ int main() {
 
     // Open and create the server message queue
     cout << "Opening server mq..." << '\n';
-    if ((qd_server = mq_open (SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)) == -1) {
-        cerr << "Server: mq_open (server)";
-        exit (1);
-    }
+    mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
+        "Server: mq_open(server) had a problem.");
+    
+    // Successful open
     cout << "Server mq successfully opened." << '\n';
     cout << "Server is listening from queue name: " << SERVER_QUEUE_NAME << "\n";
 
-    // bool all_synced = false;
-    // while (!all_synced) {
-
-    // }
+    // Server keeps listening until it is finished.
+    bool finished = true;
+    while (!finished) {
+        // Recieve any message from the server's mailbox.
+        mq_assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
+            "Server: mq_receive had a problem.");
+    }
 
     cout << "Shutting down server mq..." << '\n';
 
     // Finish use by closing the mq.
-    if (mq_close(qd_server) == -1) {
-        cerr << "Could not close the server mq!" << '\n';
-        exit(1);
-    }
+    mq_assert((mq_close(qd_server)),
+        "Could not close the server mq!");
     // Unlink the server (delete the message queue).
     //  Since it's no longer needed in the filesystem.
-    if (mq_unlink(SERVER_QUEUE_NAME) == -1) {
-        cerr << "Could not delete the server mq!" << '\n';
-        exit(1);
-    }
+    mq_assert((mq_unlink(SERVER_QUEUE_NAME)),
+        "Could not delete the server mq!");
     
+    // Successful shutdown via resource cleanup
     cout << "Successfully shut down the server mq." << '\n';
 }
