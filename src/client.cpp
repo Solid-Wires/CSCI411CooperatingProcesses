@@ -13,7 +13,7 @@ int main() {
 
     // Form the client queue name, formatted with the process's PID
     char client_queue_name[64];
-    sprintf(client_queue_name, CLIENT_QUEUE_NAME.c_str(), getpid());
+    sprintf(client_queue_name, CLIENT_QUEUE_NAME, getpid());
 
     cout << client_queue_name << '\n';
 }
