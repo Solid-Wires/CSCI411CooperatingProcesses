@@ -9,6 +9,7 @@
 #include <mqueue.h>
 #include <cstring>
 #include <iostream>
+#include <unistd.h>
 
 // Definitions shard between the client and server.
 #define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
