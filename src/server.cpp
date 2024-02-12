@@ -5,7 +5,7 @@
 using namespace std;
 
 // Shuts down the server mq. Called via either signal or manual call.
-void shutdown_server_mq() {
+void shutdown_server_mq(int signum) {
     cout << "Shutting down server mq..." << '\n';
 
     // Finish use by closing the mq.
