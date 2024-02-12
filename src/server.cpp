@@ -5,6 +5,8 @@
 using namespace std;
 
 // Shuts down the server mq. Called via either signal or manual call.
+//  This helps clean up any resources that the message queue used, so that it doesn't strain
+//  space in there with an unused mq.
 void shutdown_server_mq(int signum) {
     cout << "Shutting down server mq..." << '\n';
 
