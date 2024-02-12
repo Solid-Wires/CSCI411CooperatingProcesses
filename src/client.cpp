@@ -14,5 +14,5 @@ int main() {
     // Queue descriptors
     mqd_t qd_server, qd_client;
 
-    
+    cout << SERVER_QUEUE_NAME << '\n';
 }
