@@ -48,7 +48,7 @@ int main ()
     char client_queue_name [64];
     string str_client_queue_name = CLIENT_QUEUE_NAME;
     str_client_queue_name += "%d";
-    sprintf(client_queue_name, str_client_queue_name, getpid());
+    sprintf(client_queue_name, str_client_queue_name.c_str(), getpid());
 	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
     //string  str_client_queue_name = "/coop-processes-client-test";
