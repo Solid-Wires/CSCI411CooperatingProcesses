@@ -46,11 +46,13 @@ int main ()
     //  EDIT: From testing somewhere else, strcpy does NOT add the null terminating string.
     //      Was this a red herring?
     char client_queue_name [64];
-    sprintf(client_queue_name, CLIENT_QUEUE_NAME + "%d", getpid());
+    string str_client_queue_name = CLIENT_QUEUE_NAME;
+    str_client_queue_name += "%d";
+    sprintf(client_queue_name, str_client_queue_name, getpid());
 	//string  str_client_queue_name = "/coop-processes-client-" + to_string(getpid ()) + "\\0'";
 	//string  str_client_queue_name = "/coop-processes-client-" + std::to_string(getpid ());
     //string  str_client_queue_name = "/coop-processes-client-test";
-    
+
 	// Build message queue attribute structure passed to the mq open
     struct mq_attr attr;
 		attr.mq_flags = 0;
