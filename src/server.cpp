@@ -76,7 +76,7 @@ int main ()
 		// That name is saved in the input buffer.
 
 		// Open the client's mailbox
-        if ((qd_client = mq_open (in_buffer, O_WRONLY, QUEUE_PERMISSIONS)) == 1) {
+        if ((qd_client = mq_open (in_buffer, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS)) == 1) {
             cerr << "Server: Not able to open client queue";
             continue;
         }
