@@ -86,7 +86,7 @@ int main ()
         cout << out_buffer << '\n';
 
         // Send the message to the client's mailbox/mailqueue
-		if (mq_send (qd_client, out_buffer, strlen (out_buffer), 0) == -1) {
+		if (mq_send (qd_client, out_buffer, MSG_BUFFER_SIZE, 0) == -1) {
             cerr << "Server: Not able to send message to client";
             continue;
         }
