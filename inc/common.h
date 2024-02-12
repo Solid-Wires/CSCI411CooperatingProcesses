@@ -10,8 +10,13 @@
 #include <cstring>
 #include <iostream>
 #include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 // Definitions shard between the client and server.
+//  Both have read and write permissions, since they're going to
+//  be talking to each other.
 #define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
 #define MAX_MESSAGES 10
