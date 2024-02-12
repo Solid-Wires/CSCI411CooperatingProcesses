@@ -36,8 +36,7 @@ that name to reply.
 int main ()
 {
     // queue descriptors
-    mqd_t qd_server;
-    mqd_t qd_client;
+    mqd_t qd_server, qd_client;
 
     // create the client queue for receiving messages from server
 	// use the client PID to help differentiate it from other queues with similar names
