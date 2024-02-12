@@ -8,12 +8,10 @@ using namespace std;
 #define CLIENT_QUEUE_NAME   "/jw-coop-processes-client-%d"
 
 int main() {
-    // Queue descriptors
-    mqd_t qd_server, qd_client;
-
     // Form the client queue name, formatted with the process's PID
+    //  Was surprisingly not that convoluted to form. Thanks sprintf!
     char client_queue_name[64];
     sprintf(client_queue_name, CLIENT_QUEUE_NAME, getpid());
 
-    cout << client_queue_name << '\n';
+
 }

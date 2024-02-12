@@ -5,8 +5,5 @@
 using namespace std;
 
 int main() {
-    // Queue descriptors
-    mqd_t qd_server, qd_client;
-
     
 }

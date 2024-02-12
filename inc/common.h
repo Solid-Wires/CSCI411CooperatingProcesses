@@ -18,6 +18,13 @@
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
 
+// Both instances expect Queue Descriptors for client & server
+mqd_t qd_server, qd_client;
+
+// Both instances have an input and output buffer.
+char inbuf [MSG_BUFFER_SIZE];
+char outbuf [MSG_BUFFER_SIZE];
+
 // The attr struct will be shared between both instances
 //  No real reason to make them different
 struct mq_attr attr = {
