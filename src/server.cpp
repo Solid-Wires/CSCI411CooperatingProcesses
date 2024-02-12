@@ -78,6 +78,7 @@ int main ()
         // Open the client's mailbox
         //  (this was checking against 1... Typo?)
         //  YES IT WAS. THIS WAS THE REASON WHY IT WASN'T SENDING.
+        cout << in_buffer << '\n';
         if ((qd_client = mq_open (in_buffer, O_WRONLY)) == -1) {
             cerr << "Server: Not able to open client queue";
             continue;
