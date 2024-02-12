@@ -20,6 +20,10 @@ int main() {
     // }
 
     // Close the server.
+    if (mq_unlink(SERVER_QUEUE_NAME) == -1) {
+        cerr << "Could not unlink the server mq!";
+        exit(1);
+    }
     if (mq_close(qd_server) != -1) {
         cerr << "Could not close the server mq!";
         exit(1);
