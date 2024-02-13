@@ -8,7 +8,7 @@ using namespace std;
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
 void shutdown_server_mq(int signum) {
-    cout << "Shutting down server mq..." << '\n';
+    cout << "Shutting down server..." << '\n';
 
     // Finish use by closing the mq.
     mq_assert((mq_close(qd_server)),
@@ -19,7 +19,7 @@ void shutdown_server_mq(int signum) {
         "Could not delete the server mq!");
     
     // Successful shutdown via resource cleanup
-    cout << "Successfully shut down the server mq." << '\n';
+    cout << "Successfully shut down the server." << '\n';
     exit(0);
 }
 
@@ -38,7 +38,7 @@ int main() {
     cout << "Server mq successfully opened." << '\n';
     cout << "Server is listening from queue name: " << SERVER_QUEUE_NAME << "\n";
 
-    // Server keeps listening until it is finished.
+    // Server keeps running until it is finished.
     bool finished = false;
     while (!finished) {
         // Recieve any message from the server's mailbox.
@@ -47,6 +47,7 @@ int main() {
         
         cout << "Server received message" << '\n';
 
+        // TODO: What do I do with the buffer?
     }
     
     // Shutdown the server.
