@@ -9,7 +9,7 @@ vector<string> clients;
 // Each client gets their initial temperature based on the order in when they greet the server.
 //  From earliest greeter to latest greeter.
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
-float initialClientTemps = {100.0, 22.0, 50.0, 40.0};
+float initialClientTemps[4] = {100.0, 22.0, 50.0, 40.0};
 
 // The central server temp. It is not initialized right now because it isn't known until it
 //  receives all 4 of the clients' temps.
