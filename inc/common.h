@@ -38,7 +38,7 @@ extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
 // Function prototypes, defined in common.cpp
-void ShutdownMQ(int signum);
+void ShutdownMQ(int signum); // This has a different contextual procedure on both instances
 
 void introduce(void);
 void assert(int code, std::string why);
