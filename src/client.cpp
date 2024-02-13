@@ -14,11 +14,12 @@ char client_queue_name[64];
 //  the server responds to it.
 float clientExtTemp;
 
-// Shuts down the server mq. Called via either interrupt signal or manual call.
+// Shuts down the client mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
-void ShutdownClientMQ(int signum) {
+void ShutdownMQ(int signum) {
     cout << "Shutting down client..." << '\n';
+    shuttingDown = true;
 
     // Finish use by closing the mq.
     assert((mq_close(qd_client)),
@@ -67,7 +68,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
         } catch(...) {
             // Otherwise, something went wrong. Shut the client down.
             cout << "ERROR: Unexpected response from server. Shutting down." << '\n';
-            ShutdownClientMQ(0);
+            ShutdownMQ(0);
         }
     }
     
@@ -96,7 +97,7 @@ int main() {
     
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination
-    signal(SIGINT, ShutdownClientMQ);
+    signal(SIGINT, ShutdownMQ);
 
     // Successful open
     cout << "Client and server mq successfully opened." << '\n';
@@ -105,5 +106,5 @@ int main() {
     GreetAndAwaitInitiationResponseFromServer();
 
     // Shutdown the client
-    ShutdownClientMQ(0);
+    ShutdownMQ(0);
 }

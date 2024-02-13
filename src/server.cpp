@@ -19,8 +19,9 @@ float serverCentralTemp;
 // Shuts down the server mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
-void ShutdownServerMQ(int signum) {
+void ShutdownMQ(int signum) {
     cout << "Shutting down server..." << '\n';
+    shuttingDown = true;
 
     // Finish use by closing the mq.
     assert((mq_close(qd_server)),
@@ -98,7 +99,7 @@ int main() {
 
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination
-    signal(SIGINT, ShutdownServerMQ);
+    signal(SIGINT, ShutdownMQ);
     
     // Successful open
     cout << "Server mq successfully opened." << '\n';
@@ -111,5 +112,5 @@ int main() {
     //  
     
     // Shutdown the server.
-    ShutdownServerMQ(0);
+    ShutdownMQ(0);
 }

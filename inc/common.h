@@ -32,11 +32,14 @@
 extern mqd_t qd_server;
 extern int pid;
 extern std::string processName;
+extern bool shuttingDown;
 extern char inbuf [MSG_BUFFER_SIZE];
 extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
 // Function prototypes, defined in common.cpp
+void ShutdownMQ(int signum);
+
 void introduce(void);
 void assert(int code, std::string why);
 

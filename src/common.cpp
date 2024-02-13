@@ -9,6 +9,7 @@ mqd_t qd_server;
 //  processName is mainly used for debugging
 int pid;
 std::string processName;
+bool shuttingDown = false;
 
 // Both instances have an input and output buffer.
 char inbuf [MSG_BUFFER_SIZE];
@@ -29,11 +30,15 @@ void introduce() {
     cout << "The PID is: " << pid << '\n';
 }
 // Shorthand for the if-statement check when the mq result == -1.
-//  Which means it failed. Prints off why and closes the application.
+//  Which means it failed. Prints off why and try to shut the process down gracefully.
 void assert(int code, string why) {
     if (code == -1) {
         cerr << why << '\n';
-        exit(1);
+        // Try to shut down gracefully, if it isn't already shutting down
+        //  Otherwise, do report the why in the assertion
+        if (!shuttingDown) {
+            ShutdownMQ(0);
+        }
     }
 }
 
