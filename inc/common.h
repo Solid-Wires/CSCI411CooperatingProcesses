@@ -28,18 +28,13 @@
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 #define REPORT_SEND true // Report every message sent before sending
 
-// Both instances expect Queue Descriptors for the server
-//  However, the context for qd_client from both instances are completely different
-mqd_t qd_server;
-
-// The pid and custom name of the instance, stored.
-//  processName is mainly used for debugging
-int pid;
-std::string processName;
+extern mqd_t qd_server;
+extern int pid;
+extern std::string processName;
 
 // Both instances have an input and output buffer.
-char inbuf [MSG_BUFFER_SIZE];
-char outbuf [MSG_BUFFER_SIZE];
+extern char inbuf;
+extern char outbuf;
 
 // The attr struct will be shared between both instances
 //  No real reason to make them different
