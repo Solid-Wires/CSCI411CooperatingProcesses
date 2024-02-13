@@ -28,6 +28,7 @@
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 #define REPORT_SEND true // Report every message sent before sending
 
+// Fields defined in common.cpp
 extern mqd_t qd_server;
 extern int pid;
 extern std::string processName;
@@ -35,7 +36,7 @@ extern char inbuf [MSG_BUFFER_SIZE];
 extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
-// Function prototypes
+// Function prototypes, defined in common.cpp
 void reportSend(void);
 void mq_assert(int code, std::string why);
 void countdownWait(void);
