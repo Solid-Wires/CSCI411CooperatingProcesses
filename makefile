@@ -17,8 +17,8 @@ common_comps: src/common.cpp
 	gcc $(VERSION) -c src/common.cpp -o obj/common/common.o
 
 programs: client_comp server_comp common_comps
-	g++ obj/client.o obj/common/*.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
-	g++ obj/server.o  obj/common/*.o -o $(SERVER) $(REAL_TIME_LIBRARY)
+	g++ obj/client.o obj/common/common.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
+	g++ obj/server.o  obj/common/common.o -o $(SERVER) $(REAL_TIME_LIBRARY)
 
 .PHONY: clean
 clean:
