@@ -81,6 +81,7 @@ void WaitForClients() {
     // Send ready signal now
     sprintf(outbuf, "%d", true);
     sendToAllClients();
+    cout << "Ready signal sent." << '\n';
 }
 
 int main() {
