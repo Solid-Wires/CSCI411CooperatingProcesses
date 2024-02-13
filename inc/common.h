@@ -31,19 +31,9 @@
 extern mqd_t qd_server;
 extern int pid;
 extern std::string processName;
-
-// Both instances have an input and output buffer.
-extern char inbuf;
-extern char outbuf;
-
-// The attr struct will be shared between both instances
-//  No real reason to make them different
-struct mq_attr attr = {
-    .mq_flags = 0,
-    .mq_maxmsg = MAX_MESSAGES,
-    .mq_msgsize = MAX_MSG_SIZE,
-    .mq_curmsgs = 0
-};
+extern char inbuf [MSG_BUFFER_SIZE];
+extern char outbuf [MSG_BUFFER_SIZE];
+extern struct mq_attr attr;
 
 // Function prototypes
 void reportSend(void);
