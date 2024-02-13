@@ -56,8 +56,8 @@ void mq_assert(int code, std::string why) {
 // Countdown to READY_WAIT_SEC
 void countdownWait() {
     int maxWaitSecs = READY_WAIT_SEC;
-    for (int i = 0; i < READY_WAIT_SEC; i++) {
-        std::cout << i << "... ";
+    for (int i = READY_WAIT_SEC; i > 0; i--) {
+        std::cout << i << "... " << flush;
         usleep(1000000);
     }
     std::cout << '\n';
