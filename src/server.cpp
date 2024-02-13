@@ -29,7 +29,12 @@ void shutdown_server_mq(int signum) {
     //  Since it's no longer needed in the filesystem.
     mq_assert((mq_unlink(SERVER_QUEUE_NAME)),
         "Could not delete the server mq! Did it ever exist?");
-    
+    // Try to close every connection to the clients.
+    for (string client : clients) {
+        mq_assert((mq_close(openClients[client])),
+            "Could not close the server mq! Was it ever opened?");
+    }
+
     // Successful shutdown via resource cleanup
     cout << "Successfully shut down the server." << '\n';
     exit(0);

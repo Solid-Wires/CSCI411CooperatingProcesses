@@ -25,6 +25,10 @@ void shutdown_client_mq(int signum) {
         "Could not close the server mq!");
     mq_assert((mq_close(qd_server)),
         "Could not close the server mq!");
+    // Unlink the client (delete the message queue).
+    //  Since it's no longer needed in the filesystem.
+    mq_assert((mq_unlink(client_queue_name)),
+        "Could not delete the client mq! Did it ever exist?");
     
     // Successful shutdown via resource cleanup
     cout << "Successfully shut down the client." << '\n';
