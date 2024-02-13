@@ -38,6 +38,8 @@ void shutdown_server_mq(int signum) {
 //  shake its hand. It records all of the clients that the server gets to know and sends
 //  them back their temperatures on a first-come-first-served basis.
 void WaitForClients() {
+    cout << "Server needs exactly 4 clients to proceed. You may now execute clients." << '\n';
+
     // Loop while there are less than 4 clients known.
     while (clients.size() < 4) {
         // Recieve a greeting from a client.
