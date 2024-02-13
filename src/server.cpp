@@ -10,8 +10,6 @@ using namespace std;
 void shutdown_server_mq(int signum) {
     cout << "Shutting down server mq..." << '\n';
 
-    // Random stuff here
-
     // Finish use by closing the mq.
     mq_assert((mq_close(qd_server)),
         "Could not close the server mq!");
