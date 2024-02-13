@@ -35,7 +35,7 @@ mqd_t qd_server;
 // The pid and custom name of the instance, stored.
 //  processName is mainly used for debugging
 int pid;
-string processName;
+std::string processName;
 
 // Both instances have an input and output buffer.
 char inbuf [MSG_BUFFER_SIZE];

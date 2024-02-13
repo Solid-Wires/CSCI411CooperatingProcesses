@@ -1,18 +1,19 @@
 #include "../inc/common.h"
+using namespace std;
 
 // Print out what the process is sending before sending it.
 //  Part of the assignment's reqs.
 void reportSend() {
     if (REPORT_SEND) {
-        std::cout << pid << ": " << outbuf;
+        cout << pid << ": " << outbuf;
     }
 }
 
 // Shorthand for the if-statement check when the mq result == -1.
 //  Which means it failed. Prints off why and closes the application.
-void mq_assert(int code, std::string why) {
+void mq_assert(int code, string why) {
     if (code == -1) {
-        std::cerr << why << '\n';
+        cerr << why << '\n';
         exit(1);
     }
 }
@@ -21,8 +22,8 @@ void mq_assert(int code, std::string why) {
 void countdownWait() {
     int maxWaitSecs = READY_WAIT_SEC;
     for (int i = READY_WAIT_SEC; i > 0; i--) {
-        std::cout << i << "... " << std::flush;
+        cout << i << "... " << std::flush;
         usleep(1000000);
     }
-    std::cout << '\n';
+    cout << '\n';
 }
