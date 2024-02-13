@@ -33,7 +33,7 @@ void introduce() {
 //  Which means it failed. Prints off why and try to shut the process down gracefully.
 // You may not always need the program to shutdown after an assertion, so you can
 //  prevent that by setting the shutdown arg to false.
-void assert(int code, string why, bool shutdown = true) {
+void assert(int code, string why, bool shutdown) {
     if (code == -1) {
         cerr << why << '\n';
         // Try to shut down gracefully, if it isn't already shutting down
@@ -42,6 +42,10 @@ void assert(int code, string why, bool shutdown = true) {
             ShutdownMQ(0);
         }
     }
+}
+// Overloaded assert, making the shutdown bool optional
+void assert(int code, string why) {
+    assert(code, why, true);
 }
 
 // Sends a message from whatever is in outbuf to a given descriptor.
