@@ -44,6 +44,7 @@ void shutdown_server_mq(int signum) {
 // Send the outbuf message to all clients.
 void sendToAllClients() {
     for (string client : clients) {
+        reportSend();
         mq_assert((mq_send(openClients[client], outbuf, strlen(outbuf) + 1, 0)),
             "Server failed to send a message to the client " + client);
     }
@@ -72,6 +73,7 @@ void WaitForClients() {
         //Send them their temperature after the hand shake.
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
         sprintf(outbuf, "%.1f", clientInitialTemp);
+        reportSend();
         mq_assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
             "Server failed to send a message to the client " + clients.back());
     }
@@ -86,6 +88,11 @@ void WaitForClients() {
 }
 
 int main() {
+    // Get the pid and set name
+    pid = getpid();
+    processName = SERVER_QUEUE_NAME;
+    cout << "This is the server: " << SERVER_QUEUE_NAME << '\n';
+    cout << "The PID is: " << pid;
 
     // Open and create the server message queue
     cout << "Opening server mq..." << '\n';
@@ -102,6 +109,9 @@ int main() {
 
     // Wait for all clients to connect to the server and get their temperatures.
     WaitForClients();
+
+    // All clients have received their temperatures and now the server recognizes them.
+    //  
     
     // Shutdown the server.
     shutdown_server_mq(0);

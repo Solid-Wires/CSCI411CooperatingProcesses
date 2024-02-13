@@ -26,10 +26,16 @@
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
+#define REPORT_SEND true // Report every message sent before sending
 
 // Both instances expect Queue Descriptors for the server
 //  However, the context for qd_client from both instances are completely different
 mqd_t qd_server;
+
+// The pid and custom name of the instance, stored.
+//  processName is mainly used for debugging
+int pid;
+string processName;
 
 // Both instances have an input and output buffer.
 char inbuf [MSG_BUFFER_SIZE];
@@ -44,23 +50,9 @@ struct mq_attr attr = {
     .mq_curmsgs = 0
 };
 
-// Shorthand for the if-statement check when the mq result == -1.
-//  Which means it failed. Prints off why and closes the application.
-void mq_assert(int code, std::string why) {
-    if (code == -1) {
-        std::cerr << why << '\n';
-        exit(1);
-    }
-}
-
-// Countdown to READY_WAIT_SEC
-void countdownWait() {
-    int maxWaitSecs = READY_WAIT_SEC;
-    for (int i = READY_WAIT_SEC; i > 0; i--) {
-        std::cout << i << "... " << std::flush;
-        usleep(1000000);
-    }
-    std::cout << '\n';
-}
+// Function prototypes
+void reportSend();
+void mq_assert(int code, std::string why);
+void countdownWait();
 
 #endif

@@ -44,6 +44,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Greeting server with identity " << client_queue_name << "..." << '\n';
 
     // Send the client's name over to the server
+    
     mq_assert((mq_send (qd_server, client_queue_name , strlen(client_queue_name) + 1, 0)),
         "Client failed to send message to the server.");
 
@@ -77,9 +78,13 @@ void GreetAndAwaitInitiationResponseFromServer() {
 }
 
 int main() {
+    // Get the pid
+    pid = getpid();
+
     // Form the client queue name, formatted with the process's PID
     //  Was surprisingly not that convoluted to form. Thanks sprintf!
-    sprintf(client_queue_name, CLIENT_QUEUE_NAME, getpid());
+    sprintf(client_queue_name, CLIENT_QUEUE_NAME, pid);
+    processName = client_queue_name;
 
     // Create and open the server mq
     //  The client isn't even allowed to open if the server isn't running! That's convenient.
