@@ -19,7 +19,7 @@ float serverCentralTemp;
 // Shuts down the server mq. Called via either signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
-void shutdown_server_mq(int signum) {
+void ShutdownServerMQ(int signum) {
     cout << "Shutting down server..." << '\n';
 
     // Finish use by closing the mq.
@@ -58,7 +58,7 @@ void WaitForClients() {
     while (clients.size() < 4) {
         // Recieve a greeting from a client.
         listen(qd_server)
-        
+
         // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
         assert((openClients[clients.back()] = mq_open(clients.back().c_str(), O_WRONLY)),
@@ -97,7 +97,7 @@ int main() {
 
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination
-    signal(SIGINT, shutdown_server_mq);
+    signal(SIGINT, ShutdownServerMQ);
     
     // Successful open
     cout << "Server mq successfully opened." << '\n';
@@ -110,5 +110,5 @@ int main() {
     //  
     
     // Shutdown the server.
-    shutdown_server_mq(0);
+    ShutdownServerMQ(0);
 }

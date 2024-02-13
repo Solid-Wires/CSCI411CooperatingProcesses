@@ -67,7 +67,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
         } catch(...) {
             // Otherwise, something went wrong. Shut the client down.
             cout << "ERROR: Unexpected response from server. Shutting down." << '\n';
-            shutdown_client_mq(0);
+            ShutdownClientMQ(0);
         }
     }
     
