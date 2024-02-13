@@ -36,8 +36,7 @@ void ShutdownMQ(int signum) {
     exit(0);
 }
 
-// Perhaps the longest method name I ever written
-//  The client greets the server with its name, then it awaits
+// The client greets the server with its name, then it awaits
 //  for the server to provide its temperature information. Once it
 //  receives that, it awaits for the server to tell it that it's ready
 //  once it receives a sufficient amount of clients to talk to.

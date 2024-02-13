@@ -12,9 +12,9 @@ map<string, mqd_t> openClients;
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
 float initialClientTemps[4] = {100.0, 22.0, 50.0, 40.0};
 
-// The central server temp. It is not initialized right now because it isn't known until it
+// The central server temp. It is initialized to 0 right now because it isn't known until it
 //  receives all 4 of the clients' temps.
-float serverCentralTemp;
+float serverCentralTemp = 0;
 
 // Shuts down the server mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
@@ -85,6 +85,31 @@ void WaitForClients() {
     cout << "Ready signal sent." << '\n';
 }
 
+// Keep the server on standby, waiting for all of the clients' responses until it finds
+//  out that all 4 responses from the clients are stable temperatures.
+void RunUntilClientsAreStable() {
+    bool stabilized = false;
+    while (!stabilized) {
+        // All temperatures received from the clients are added into here
+        float tempsReceivedSum = 0;
+
+        // Listen from itself from all clients
+        //  Sum up each temperature received.
+        for (string client : clients) {
+            listen(qd_server);
+            tempsReceivedSum += stof(inbuf);
+        }
+
+        // TODO: Make a check for all clients stable
+        // Once finished, calculate the new central temperature
+        serverCentralTemp = ((2 * serverCentralTemp) + tempsReceivedSum) / 6;
+
+        // Send the new central temperature to all clients
+        sprintf(outbuf, "%.1f", serverCentralTemp);
+        sendToAllClients();
+    }
+}
+
 int main() {
     // Get the pid and set name
     pid = getpid();
@@ -109,7 +134,7 @@ int main() {
     WaitForClients();
 
     // All clients have received their temperatures and now the server recognizes them.
-    //  
+
     
     // Shutdown the server.
     ShutdownMQ(0);
