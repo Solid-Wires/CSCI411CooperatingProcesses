@@ -125,7 +125,7 @@ void RunUntilClientsAreStable() {
                     }
                     break;
             }
-            tempsReceivedSum += tempsReceived.back();
+            tempsReceivedSum += temperature;
         }
 
         // Calculate the new server central temperature.
