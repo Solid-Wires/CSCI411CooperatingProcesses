@@ -4,6 +4,9 @@
 #include "../inc/common.h"
 using namespace std;
 
+// This is the client itself in this context here
+mqd_t qd_client;
+
 // Supposed to be formatted with a PID for %d
 #define CLIENT_QUEUE_NAME   "/jw-coop-processes-client-%d"
 char client_queue_name[64];
@@ -76,10 +79,10 @@ int main() {
 
     // Create and open the server mq
     //  The client isn't even allowed to open if the server isn't running! That's convenient.
-    mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_WRONLY)),
+    mq_assert((qd_server = mq_open(SERVER_QUEUE_NAME, O_WRONLY)),
         "Client: mq_open(server) failed - Is the server running?");
     // Create and open the client mq
-    mq_assert((qd_client = mq_open (client_queue_name, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
+    mq_assert((qd_client = mq_open(client_queue_name, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
         "Client: mq_open(client) failed - what went wrong?");
     
     // After opening, connect the interrupt signal to the shutdown method

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <vector>
+#include <map>
 #include <mqueue.h>
 #include <cstring>
 #include <iostream>
@@ -25,8 +26,9 @@
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
 
-// Both instances expect Queue Descriptors for client & server
-mqd_t qd_server, qd_client;
+// Both instances expect Queue Descriptors for the server
+//  However, the context for qd_client from both instances are completely different
+mqd_t qd_server;
 
 // Both instances have an input and output buffer.
 char inbuf [MSG_BUFFER_SIZE];

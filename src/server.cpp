@@ -6,6 +6,7 @@ using namespace std;
 
 // All known clients that greeted the server.
 vector<string> clients;
+map<string, mqd_t> openClients;
 // Each client gets their initial temperature based on the order in when they greet the server.
 //  From earliest greeter to latest greeter.
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
@@ -45,8 +46,11 @@ void WaitForClients() {
         // Recieve a greeting from a client.
         mq_assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
             "Server: mq_receive failed. What went wrong?");
-        // New client! Give them their temperature!
+        // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
+        mq_assert((openClients[clients.back()] = mq_open(clients.back(), O_WRONLY)),
+            "Server: mq_open(client) failed - what went wrong?");
+        mqd_t qd_client = openClients[clients.back()];
         int clientIdx = clients.size() - 1;
         float clientInitialTemp = initialClientTemps[clientIdx];
         cout << "Welcome! Shook hands with a new client named " << clients.back() << '\n';
@@ -55,7 +59,7 @@ void WaitForClients() {
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
         sprintf(outbuf, "%.1f", clientInitialTemp);
         mq_assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
-            "Server: mq_receive failed. What went wrong?");
+            "Server failed to send a message to the client.");
     }
 
     // Server is now ready to get started.
@@ -66,7 +70,7 @@ int main() {
 
     // Open and create the server message queue
     cout << "Opening server mq..." << '\n';
-    mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
+    mq_assert((qd_server = mq_open(SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
         "Server: mq_open(server) failed. What went wrong?");
 
     // After opening, connect the interrupt signal to the shutdown method
