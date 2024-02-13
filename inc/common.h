@@ -27,7 +27,7 @@
 // Both instances expect Queue Descriptors for client & server
 mqd_t qd_server, qd_client;
 
-std:string bufstr;
+std::string bufstr;
 
 // Both instances have an input and output buffer.
 char inbuf [MSG_BUFFER_SIZE];
