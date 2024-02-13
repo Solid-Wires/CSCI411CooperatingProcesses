@@ -5,8 +5,8 @@
 using namespace std;
 
 // All known clients that greeted the server.
-vector<char[64]> clients;
-map<char[64], mqd_t> openClients;
+vector<string> clients;
+map<string, mqd_t> openClients;
 // Each client gets their initial temperature based on the order in when they greet the server.
 //  From earliest greeter to latest greeter.
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
@@ -48,7 +48,7 @@ void WaitForClients() {
             "Server: mq_receive failed. What went wrong?");
         // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
-        mq_assert((openClients[clients.back()] = mq_open(clients.back(), O_WRONLY)),
+        mq_assert((openClients[clients.back()] = mq_open(clients.back().c_str(), O_WRONLY)),
             "Server: mq_open(client) failed - what went wrong?");
         mqd_t qd_client = openClients[clients.back()];
         int clientIdx = clients.size() - 1;
