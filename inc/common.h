@@ -28,6 +28,7 @@
 #define MAX_CLIENT_NAME_SIZE MAX_MSG_SIZE
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 #define REPORT_SEND true // Report every message sent before sending
+#define CLIENT_END_MESSAGE   "END"
 
 // Fields defined in common.cpp
 extern mqd_t qd_server;

@@ -43,7 +43,7 @@ void ShutdownMQ(int signum) {
 }
 
 // Send the outbuf message to all clients.
-void sendToAllClients() {
+void SendToAllClients() {
     for (string client : clients) {
         send(openClients[client]);
     }
@@ -81,7 +81,7 @@ void WaitForClients() {
     countdown();
     // Send ready signal now
     sprintf(outbuf, "%d", true);
-    sendToAllClients();
+    SendToAllClients();
     cout << "Ready signal sent." << '\n';
 }
 
@@ -90,24 +90,76 @@ void WaitForClients() {
 void RunUntilClientsAreStable() {
     bool stabilized = false;
     while (!stabilized) {
-        // All temperatures received from the clients are added into here
+        // All temperatures received are added into here
         float tempsReceivedSum = 0;
+        // The conditional procedure for whenever or not the clients are stable.
+        //  Let's assume that they are stable - then disprove or approve of this assumption.
+        float lastTempReceived;
+        int code = 0; // Check off of a condition code: 0 means initial, 1 means stable, 2 means unstable
 
         // Listen from itself from all clients
-        //  Sum up each temperature received.
+        //  Sum up each temperature received
+        //  And also perform stability checking
         for (string client : clients) {
             listen(qd_server);
-            tempsReceivedSum += stof(inbuf);
+            float temperature = stof(inbuf);
+            switch(code) {
+                // Skip this entirely - it was figured out before that the system is unstable.
+                case 2: break;
+                // Initial - we don't know for sure yet. Set the initial last temp received.
+                case 0:
+                    lastTempReceived = temperature;
+                    code = 1;
+                    break;
+                // Assumption checking - The last temperature comparison was stable, but what about this one?
+                case 1:
+                    if (lastTempReceived == temperature) {
+                        // Don't change the code. Make this the last temperature received.
+                        //  This doesn't mean that the clients are stable yet, though.
+                        lastTempReceived = temperature
+                    }
+                    else {
+                        // These two temps are not the same. The clients are unstable.
+                        //  Change the code to 2 - unstable.
+                        code = 2;
+                    }
+                    break;
+            }
+            tempsReceivedSum += tempsReceived.back();
         }
 
-        // TODO: Make a check for all clients stable
-        // Once finished, calculate the new central temperature
+        // Calculate the new server central temperature.
         serverCentralTemp = ((2 * serverCentralTemp) + tempsReceivedSum) / 6;
 
-        // Send the new central temperature to all clients
-        sprintf(outbuf, "%.1f", serverCentralTemp);
-        sendToAllClients();
+        // Check against code received.
+        if (code > 1) {
+            // The clients are, in whatever capacity described, still unstable. Send them a new central temperature.
+            sprintf(outbuf, "%.1f", serverCentralTemp);
+            SendToAllClients();
+        }
+        else if (code == 1) {
+            // The clients are fully synchronized. Stability was achieved.
+            stabilized = true;
+        }
+        else { // Bad code
+            // The code never changed from initial?
+            if (code == 0) {
+                cout << "ERR: Never changed condition code from 0, so no comparisons were made." << '\n';
+            }
+            // Did I goof up and write an undefined code?
+            else {
+                cout << "ERR: Undefined condition code." << '\n';
+            }
+            // Anyways, shut down the server and send shutdown message to all clients.
+            sprintf(outbuf, "%s", CLIENT_END_MESSAGE);
+            SendToAllClients();
+            ShutdownMQ(1);
+        }
     }
+
+    // If we've left the loop, then all clients have successfully been synchronized. The temperatures are now stable.
+    cout << "All clients have successfully had their temperature stabilized." << '\n';
+    cout << "The final central temperature was computed to be: " << serverCentralTemp << '\n';
 }
 
 int main() {
@@ -134,8 +186,10 @@ int main() {
     WaitForClients();
 
     // All clients have received their temperatures and now the server recognizes them.
-
+    //  Now the server will listen and respond with temperature calculations from all clients.
+    RunUntilClientsAreStable();
     
-    // Shutdown the server.
+    // Shutdown the server. This is a good shutdown.
+    cout << '\n';
     ShutdownMQ(0);
 }
