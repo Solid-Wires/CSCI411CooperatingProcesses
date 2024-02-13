@@ -23,25 +23,31 @@ struct mq_attr attr = {
     .mq_curmsgs = 0
 };
 
-// Print out what the process is sending before sending it.
-//  Part of the assignment's reqs.
-void reportSend() {
-    if (REPORT_SEND) {
-        cout << pid << ": " << outbuf;
-    }
+// States the program's identity
+void introduce() {
+    cout << "This process is: " << processName << '\n';
+    cout << "The PID is: " << pid << '\n';
 }
-
 // Shorthand for the if-statement check when the mq result == -1.
 //  Which means it failed. Prints off why and closes the application.
-void mq_assert(int code, string why) {
+void assert(int code, string why) {
     if (code == -1) {
         cerr << why << '\n';
         exit(1);
     }
 }
 
+// Sends a message from the outbuf to a given descriptor.
+void send(mqd_t mq_desc) {
+    // Part of the assignment's reqs is to report every send
+    if (REPORT_SEND) {
+        cout << pid << ": " << outbuf;
+    }
+
+}
+
 // Countdown to READY_WAIT_SEC
-void countdownWait() {
+void countdown() {
     int maxWaitSecs = READY_WAIT_SEC;
     for (int i = READY_WAIT_SEC; i > 0; i--) {
         cout << i << "... " << std::flush;

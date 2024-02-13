@@ -37,8 +37,11 @@ extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
 // Function prototypes, defined in common.cpp
-void reportSend(void);
-void mq_assert(int code, std::string why);
-void countdownWait(void);
+void introduce(void);
+void assert(int code, std::string why);
+
+void send(mqd_t mq_desc);
+
+void countdown(void);
 
 #endif

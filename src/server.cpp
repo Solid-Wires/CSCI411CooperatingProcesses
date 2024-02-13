@@ -23,16 +23,16 @@ void shutdown_server_mq(int signum) {
     cout << "Shutting down server..." << '\n';
 
     // Finish use by closing the mq.
-    mq_assert((mq_close(qd_server)),
+    assert((mq_close(qd_server)),
         "Could not close the server mq! Was it ever opened?");
     // Unlink the server (delete the message queue).
     //  Since it's no longer needed in the filesystem.
-    mq_assert((mq_unlink(SERVER_QUEUE_NAME)),
+    assert((mq_unlink(SERVER_QUEUE_NAME)),
         "Could not delete the server mq! Did it ever exist?");
     // Try to close every connection to the clients.
     //  Each client handles their own mq's deletion
     for (string client : clients) {
-        mq_assert((mq_close(openClients[client])),
+        assert((mq_close(openClients[client])),
             "Could not close a client mq! Was it ever opened?");
     }
 
@@ -45,7 +45,7 @@ void shutdown_server_mq(int signum) {
 void sendToAllClients() {
     for (string client : clients) {
         reportSend();
-        mq_assert((mq_send(openClients[client], outbuf, strlen(outbuf) + 1, 0)),
+        assert((mq_send(openClients[client], outbuf, strlen(outbuf) + 1, 0)),
             "Server failed to send a message to the client " + client);
     }
 }
@@ -59,11 +59,11 @@ void WaitForClients() {
     // Loop while there are less than 4 clients known.
     while (clients.size() < 4) {
         // Recieve a greeting from a client.
-        mq_assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
+        assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
             "Server: mq_receive failed. What went wrong?");
         // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
-        mq_assert((openClients[clients.back()] = mq_open(clients.back().c_str(), O_WRONLY)),
+        assert((openClients[clients.back()] = mq_open(clients.back().c_str(), O_WRONLY)),
             "Server: mq_open(client) failed - what went wrong?");
         mqd_t qd_client = openClients[clients.back()];
         int clientIdx = clients.size() - 1;
@@ -73,8 +73,7 @@ void WaitForClients() {
         //Send them their temperature after the hand shake.
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
         sprintf(outbuf, "%.1f", clientInitialTemp);
-        reportSend();
-        mq_assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
+        assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
             "Server failed to send a message to the client " + clients.back());
     }
 
@@ -91,12 +90,12 @@ int main() {
     // Get the pid and set name
     pid = getpid();
     processName = SERVER_QUEUE_NAME;
-    cout << "This is the server: " << SERVER_QUEUE_NAME << '\n';
-    cout << "The PID is: " << pid;
+    // Introduce yourself
+    introduce();
 
     // Open and create the server message queue
     cout << "Opening server mq..." << '\n';
-    mq_assert((qd_server = mq_open(SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
+    assert((qd_server = mq_open(SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
         "Server: mq_open(server) failed. What went wrong?");
 
     // After opening, connect the interrupt signal to the shutdown method
