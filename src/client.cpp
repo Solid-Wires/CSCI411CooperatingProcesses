@@ -44,9 +44,8 @@ void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Greeting server with identity " << client_queue_name << "..." << '\n';
 
     // Send the client's name over to the server
-    
-    assert((mq_send (qd_server, client_queue_name , strlen(client_queue_name) + 1, 0)),
-        "Client failed to send message to the server.");
+    sprintf(outbuf, client_queue_name);
+    send(qd_server);
 
     // Wait for a response from the server
     //  Message recieved is the client's temperature, assigned by
