@@ -4,6 +4,13 @@
 #include "../inc/common.h"
 using namespace std;
 
+// All known clients that greeted the server.
+vector<string> clients;
+// Each client gets their initial temperature based on the order in when they greet the server.
+//  From earliest greeter to latest greeter.
+//  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
+float initialClientTemps = {100.0, 22.0, 50.0, 40.0};
+
 // The central server temp. It is not initialized right now because it isn't known until it
 //  receives all 4 of the clients' temps.
 float serverCentralTemp;
@@ -27,6 +34,32 @@ void shutdown_server_mq(int signum) {
     exit(0);
 }
 
+// The first procedure that the server should do is wait for all of the clients to
+//  shake its hand. It records all of the clients that the server gets to know and sends
+//  them back their temperatures on a first-come-first-served basis.
+void WaitForClients() {
+    // Loop while there are less than 4 clients known.
+    while (clients.size() < 4) {
+        // Recieve a greeting from a client.
+        mq_assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
+            "Server: mq_receive failed. What went wrong?");
+        // New client! Give them their temperature!
+        clients.push_back(inbuf);
+        int clientIdx = clients.size() - 1;
+        float clientInitialTemp = initialClientTemps[clientIdx];
+        cout << "Welcome! Shook hands with a new client named " << clients.back() << '\n';
+
+        //Send them their temperature after the hand shake.
+        cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
+        sprintf(outbuf, "%.1f", clientInitialTemp);
+        mq_assert((mq_send(qd_client, outbuf, MSG_BUFFER_SIZE, NULL)),
+            "Server: mq_receive failed. What went wrong?");
+    }
+
+    // Server is now ready to get started.
+    cout << "Server now has all of the clients it was expecting. Sending ready signal." << '\n';
+}
+
 int main() {
 
     // Open and create the server message queue
@@ -42,17 +75,8 @@ int main() {
     cout << "Server mq successfully opened." << '\n';
     cout << "Server is listening from queue name: " << SERVER_QUEUE_NAME << "\n";
 
-    // Server keeps running until it is finished.
-    bool finished = false;
-    while (!finished) {
-        // Recieve any message from the server's mailbox.
-        mq_assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
-            "Server: mq_receive had a problem.");
-        
-        cout << "Server received message" << '\n';
-
-        // TODO: What do I do with the buffer?
-    }
+    // Wait for all clients to connect to the server and get their temperatures.
+    WaitForClients();
     
     // Shutdown the server.
     shutdown_server_mq(0);

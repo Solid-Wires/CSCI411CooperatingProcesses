@@ -45,6 +45,8 @@ void GreetAndAwaitInitiationResponseFromServer() {
     //  the server.
     mq_assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
         "Client: mq_recieve failed. What went wrong?");
+    // Client's external temperature has been received and initialized!
+    clientExtTemp = stof(inbuf);
     cout << "Received external temperature of " << clientExtTemp << " from server." << '\n';
 
     // Keep listening for the server to say the clients are ready.
@@ -53,6 +55,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     while (!ready) {
         mq_assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
             "Client: mq_recieve failed. What went wrong?");
+        // Whenever this fails or not largely depends on what's sent through the inbuf.
         try {
             bool response = stoi(inbuf); // Supposed to be 1 = true
             ready = response;
