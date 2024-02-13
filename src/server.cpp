@@ -116,7 +116,7 @@ void RunUntilClientsAreStable() {
                     if (lastTempReceived == temperature) {
                         // Don't change the code. Make this the last temperature received.
                         //  This doesn't mean that the clients are stable yet, though.
-                        lastTempReceived = temperature
+                        lastTempReceived = temperature;
                     }
                     else {
                         // These two temps are not the same. The clients are unstable.
