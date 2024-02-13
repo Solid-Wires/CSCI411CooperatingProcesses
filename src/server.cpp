@@ -52,7 +52,7 @@ void WaitForClients() {
         //Send them their temperature after the hand shake.
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
         sprintf(outbuf, "%.1f", clientInitialTemp);
-        mq_assert((mq_send(qd_client, outbuf, MSG_BUFFER_SIZE, NULL)),
+        mq_assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
             "Server: mq_receive failed. What went wrong?");
     }
 
