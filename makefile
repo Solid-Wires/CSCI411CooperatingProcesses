@@ -1,9 +1,10 @@
 CLIENT=client
 SERVER=server
 
-CLIENT_OBJ_DIR=obj/client
-SERVER_OBJ_DIR=obj/server
-COMMON_OBJ_DIR=obj/common
+OBJ_DIR=obj
+CLIENT_OBJ_DIR=$(OBJ_DIR)/client
+SERVER_OBJ_DIR=$(OBJ_DIR)/server
+COMMON_OBJ_DIR=$(OBJ_DIR)/common
 
 # There we go, now it's compiling to the right version
 VERSION=-std=c++11
@@ -13,10 +14,10 @@ all: directories programs
 
 # Make all of these directories if they don't exist (silent)
 directories:
-	@mkdir -p "obj"
-	@mkdir -p "obj/client"
-	@mkdir -p "obj/server"
-	@mkdir -p "obj/common"
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(CLIENT_OBJ_DIR)
+	@mkdir -p $(SERVER_OBJ_DIR)
+	@mkdir -p $(COMMON_OBJ_DIR)
 
 client_comp: src/client.cpp
 	gcc $(VERSION) -c src/client.cpp -o $(CLIENT_OBJ_DIR)/client.o
