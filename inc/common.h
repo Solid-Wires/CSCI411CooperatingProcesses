@@ -9,7 +9,6 @@
 #include <mqueue.h>
 #include <cstring>
 #include <iostream>
-#include <sstream>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>

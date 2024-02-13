@@ -61,7 +61,7 @@ int main() {
     while (!ready) {
         mq_assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
             "Client: mq_recieve failed. What went wrong?");
-        bufstr.str(inbuf);
+        bufstr = str(inbuf);
     }
 
     // Shutdown the client
