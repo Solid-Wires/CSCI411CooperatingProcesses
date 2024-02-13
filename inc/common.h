@@ -23,8 +23,9 @@
 #define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
 #define MAX_MESSAGES 10
-#define MAX_MSG_SIZE 256
+#define MAX_MSG_SIZE 256 // The messages probably don't need to be that big, but I'm keeping it this way so it still works
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
+#define MAX_CLIENT_NAME_SIZE MAX_MSG_SIZE
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 #define REPORT_SEND true // Report every message sent before sending
 

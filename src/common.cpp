@@ -31,12 +31,14 @@ void introduce() {
 }
 // Shorthand for the if-statement check when the mq result == -1.
 //  Which means it failed. Prints off why and try to shut the process down gracefully.
-void assert(int code, string why) {
+// You may not always need the program to shutdown after an assertion, so you can
+//  prevent that by setting the shutdown arg to false.
+void assert(int code, string why, bool shutdown = true) {
     if (code == -1) {
         cerr << why << '\n';
         // Try to shut down gracefully, if it isn't already shutting down
         //  Otherwise, do report the why in the assertion
-        if (!shuttingDown) {
+        if (shutdown && !shuttingDown) {
             ShutdownMQ(0);
         }
     }

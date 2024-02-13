@@ -9,7 +9,7 @@ mqd_t qd_client;
 
 // Supposed to be formatted with a PID for %d
 #define CLIENT_QUEUE_NAME   "/jw-coop-processes-client-%d"
-char client_queue_name[64];
+char client_queue_name[MAX_CLIENT_NAME_SIZE];
 // This specific client's external temperature. It isn't initialized until
 //  the server responds to it.
 float clientExtTemp;
