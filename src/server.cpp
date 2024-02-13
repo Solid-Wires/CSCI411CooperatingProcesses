@@ -12,11 +12,11 @@ void shutdown_server_mq(int signum) {
 
     // Finish use by closing the mq.
     mq_assert((mq_close(qd_server)),
-        "Could not close the server mq!");
+        "Could not close the server mq! Was it ever opened?");
     // Unlink the server (delete the message queue).
     //  Since it's no longer needed in the filesystem.
     mq_assert((mq_unlink(SERVER_QUEUE_NAME)),
-        "Could not delete the server mq!");
+        "Could not delete the server mq! Did it ever exist?");
     
     // Successful shutdown via resource cleanup
     cout << "Successfully shut down the server." << '\n';
@@ -28,7 +28,7 @@ int main() {
     // Open and create the server message queue
     cout << "Opening server mq..." << '\n';
     mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
-        "Server: mq_open(server) had a problem.");
+        "Server: mq_open(server) failed. What went wrong?");
 
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination

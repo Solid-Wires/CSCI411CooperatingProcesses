@@ -30,12 +30,13 @@ int main() {
     char client_queue_name[64];
     sprintf(client_queue_name, CLIENT_QUEUE_NAME, getpid());
 
+    // Create and open the server mq
+    //  The client isn't even allowed to open if the server isn't running! That's convenient.
+    mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_WRONLY)),
+        "Client: mq_open(server) failed - Is the server running?");
     // Create and open the client mq
     mq_assert((qd_client = mq_open (client_queue_name, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
-        "Client: mq_open(client) failed");
-    // Create and open the server mq
-    mq_assert((qd_server = mq_open (SERVER_QUEUE_NAME, O_WRONLY)),
-        "Client: mq_open(server) failed");
+        "Client: mq_open(client) failed - what went wrong?");
     
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination
@@ -45,9 +46,21 @@ int main() {
     cout << "Client and server mq successfully opened." << '\n';
     cout << "Client is listening from queue name: " << client_queue_name << "\n";
 
-    // Client keeps running until it is finished.
-    bool finished = false;
-    while (!finished) {
+    // Send the client's name over to the server
+    mq_assert((mq_send (qd_server, client_queue_name , strlen(client_queue_name) + 1, 0)),
+        "Client failed to send message to the server.");
+
+    // Wait for a response from the server
+    //  Message recieved is the client's temperature, assigned by
+    //  the server.
+    mq_assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
+        "Client: mq_recieve failed. What went wrong?");
+
+    // Keep listening for the server to say the clients are ready.
+    bool ready = false;
+    while (!ready) {
+        mq_assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
+            "Client: mq_recieve failed. What went wrong?");
         
     }
 
