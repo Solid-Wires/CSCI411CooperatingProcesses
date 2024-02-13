@@ -16,7 +16,7 @@ float initialClientTemps[4] = {100.0, 22.0, 50.0, 40.0};
 //  receives all 4 of the clients' temps.
 float serverCentralTemp;
 
-// Shuts down the server mq. Called via either signal or manual call.
+// Shuts down the server mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
 void ShutdownServerMQ(int signum) {

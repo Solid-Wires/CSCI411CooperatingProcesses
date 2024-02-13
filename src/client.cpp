@@ -14,7 +14,7 @@ char client_queue_name[64];
 //  the server responds to it.
 float clientExtTemp;
 
-// Shuts down the server mq. Called via either signal or manual call.
+// Shuts down the server mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
 void ShutdownClientMQ(int signum) {
