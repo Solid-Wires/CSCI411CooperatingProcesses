@@ -4,6 +4,10 @@
 #include "../inc/common.h"
 using namespace std;
 
+// The central server temp. It is not initialized right now because it isn't known until it
+//  receives all 4 of the clients' temps.
+float serverCentralTemp;
+
 // Shuts down the server mq. Called via either signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
