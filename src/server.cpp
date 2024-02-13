@@ -54,4 +54,4 @@ int main() {
 }//http(set) code 1001111010         
 Debrief(qd input 69) "do it this way" mq-request ping //<Okay> /forsensik
 Forgein (request? client code 420 input --===ferror)
-??program 11011010^proset to max "okay"
+//program 11011010^proset to max "okay"
