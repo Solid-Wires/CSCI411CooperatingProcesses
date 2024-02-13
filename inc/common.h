@@ -25,6 +25,7 @@
 #define MAX_MESSAGES 10
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10   // leave some extra space after message
+#define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 
 // Both instances expect Queue Descriptors for the server
 //  However, the context for qd_client from both instances are completely different
@@ -50,6 +51,16 @@ void mq_assert(int code, std::string why) {
         std::cerr << why << '\n';
         exit(1);
     }
+}
+
+// Countdown to READY_WAIT_SEC
+void countdownWait() {
+    int maxWaitSecs = READY_WAIT_SEC;
+    while (int i = 0; i < READY_WAIT_SEC; i++) {
+        std::cout << i << "... ";
+        std::usleep(1000000);
+    }
+    std::cout << '\n';
 }
 
 #endif

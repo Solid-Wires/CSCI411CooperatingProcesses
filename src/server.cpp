@@ -41,6 +41,14 @@ void shutdown_server_mq(int signum) {
     exit(0);
 }
 
+// Send the outbuf message to all clients.
+void sendToAllClients() {
+    for (string client : clients) {
+        mq_assert((mq_send(openClients[client], outbuf, strlen(outbuf) + 1, 0)),
+            "Server failed to send a message to the client " + client);
+    }
+}
+
 // The first procedure that the server should do is wait for all of the clients to
 //  shake its hand. It records all of the clients that the server gets to know and sends
 //  them back their temperatures on a first-come-first-served basis.
@@ -65,11 +73,16 @@ void WaitForClients() {
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
         sprintf(outbuf, "%.1f", clientInitialTemp);
         mq_assert((mq_send(qd_client, outbuf, strlen(outbuf) + 1, 0)),
-            "Server failed to send a message to the client.");
+            "Server failed to send a message to the client " + clients.back());
     }
 
     // Server is now ready to get started.
-    cout << "Server now has all of the clients it was expecting. Sending ready signal." << '\n';
+    cout << "Server now has all of the clients it was expecting." << '\n';
+    cout << "Sending ready signal in " << '\n';
+    countdownWait();
+    // Send ready signal now
+    sprintf(outbuf, "%d", true);
+    sendToAllClients();
 }
 
 int main() {
