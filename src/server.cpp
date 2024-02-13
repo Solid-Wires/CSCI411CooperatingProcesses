@@ -30,9 +30,10 @@ void shutdown_server_mq(int signum) {
     mq_assert((mq_unlink(SERVER_QUEUE_NAME)),
         "Could not delete the server mq! Did it ever exist?");
     // Try to close every connection to the clients.
+    //  Each client handles their own mq's deletion
     for (string client : clients) {
         mq_assert((mq_close(openClients[client])),
-            "Could not close the server mq! Was it ever opened?");
+            "Could not close a client mq! Was it ever opened?");
     }
 
     // Successful shutdown via resource cleanup
