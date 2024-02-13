@@ -51,8 +51,8 @@ struct mq_attr attr = {
 };
 
 // Function prototypes
-void reportSend();
+void reportSend(void);
 void mq_assert(int code, std::string why);
-void countdownWait();
+void countdownWait(void);
 
 #endif
