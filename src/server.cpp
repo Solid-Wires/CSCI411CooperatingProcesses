@@ -77,7 +77,7 @@ void WaitForClients() {
     // Server is now ready to get started.
     cout << "Server now has all of the clients it was expecting." << '\n';
     cout << "Sending ready signal in " << '\n';
-    countdownWait();
+    countdown();
     // Send ready signal now
     sprintf(outbuf, "%d", true);
     sendToAllClients();
