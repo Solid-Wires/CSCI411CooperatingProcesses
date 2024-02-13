@@ -41,6 +41,7 @@ void introduce(void);
 void assert(int code, std::string why);
 
 void send(mqd_t mq_desc);
+void listen(mqd_t mq_desc);
 
 void countdown(void);
 
