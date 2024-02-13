@@ -58,7 +58,7 @@ void countdownWait() {
     int maxWaitSecs = READY_WAIT_SEC;
     for (int i = 0; i < READY_WAIT_SEC; i++) {
         std::cout << i << "... ";
-        std::usleep(1000000);
+        usleep(1000000);
     }
     std::cout << '\n';
 }
