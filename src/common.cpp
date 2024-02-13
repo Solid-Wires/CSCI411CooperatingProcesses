@@ -44,7 +44,13 @@ void send(mqd_t mq_desc) {
         cout << pid << ": " << outbuf << '\n';
     }
     assert((mq_send(mq_desc, outbuf, strlen(outbuf) + 1, 0)),
-        processName + " failed to send a message.");
+        processName + ": failed to send a message.");
+}
+// Listens for a message from a descriptor and puts it into inbuf.
+//  Note that mq_receive halts the program at wherever it is until it receives a message
+void listen(mqd_t mq_desc) {
+    assert((mq_receive (mq_desc, inbuf, MSG_BUFFER_SIZE, NULL)),
+        processName + ": mq_recieve failed.");
 }
 
 // Countdown to READY_WAIT_SEC

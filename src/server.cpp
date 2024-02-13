@@ -24,20 +24,20 @@ void shutdown_server_mq(int signum) {
 
     // Finish use by closing the mq.
     assert((mq_close(qd_server)),
-        "Could not close the server mq! Was it ever opened?");
+        processName + ": Could not close the server mq!");
     // Unlink the server (delete the message queue).
     //  Since it's no longer needed in the filesystem.
     assert((mq_unlink(SERVER_QUEUE_NAME)),
-        "Could not delete the server mq! Did it ever exist?");
+        processName + ": Could not delete the server mq!");
     // Try to close every connection to the clients.
     //  Each client handles their own mq's deletion
     for (string client : clients) {
         assert((mq_close(openClients[client])),
-            "Could not close a client mq! Was it ever opened?");
+            processName + ": Could not close client mq " + openClients[client] + "!");
     }
 
     // Successful shutdown via resource cleanup
-    cout << "Successfully shut down the server." << '\n';
+    cout << "Successfully shut down " << processName << '\n';
     exit(0);
 }
 
@@ -57,8 +57,8 @@ void WaitForClients() {
     // Loop while there are less than 4 clients known.
     while (clients.size() < 4) {
         // Recieve a greeting from a client.
-        assert((mq_receive(qd_server, inbuf, MSG_BUFFER_SIZE, NULL)),
-            "Server: mq_receive failed. What went wrong?");
+        listen(qd_server)
+        
         // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
         assert((openClients[clients.back()] = mq_open(clients.back().c_str(), O_WRONLY)),

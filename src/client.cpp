@@ -17,21 +17,21 @@ float clientExtTemp;
 // Shuts down the server mq. Called via either signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
 //  space in there with an unused mq.
-void shutdown_client_mq(int signum) {
+void ShutdownClientMQ(int signum) {
     cout << "Shutting down client..." << '\n';
 
     // Finish use by closing the mq.
     assert((mq_close(qd_client)),
-        "Client: Could not close the client mq!");
+        processName + ": Could not close the client mq!");
     assert((mq_close(qd_server)),
-        "Client: Could not close the server mq!");
+        processName + ": Could not close the server mq!");
     // Unlink the client (delete the message queue).
     //  Since it's no longer needed in the filesystem.
     assert((mq_unlink(client_queue_name)),
-        "Client: Could not delete the client mq! Did it ever exist?");
+        processName + ": Could not delete the client mq! Did it ever exist?");
     
     // Successful shutdown via resource cleanup
-    cout << "Successfully shut down the client." << '\n';
+    cout << "Successfully shut down client" << processName << '\n';
     exit(0);
 }
 
@@ -50,8 +50,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     // Wait for a response from the server
     //  Message recieved is the client's temperature, assigned by
     //  the server.
-    assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
-        "Client: mq_recieve failed. What went wrong?");
+    listen(qd_client);
     // Client's external temperature has been received and initialized!
     clientExtTemp = stof(inbuf);
     cout << "Received external temperature of " << clientExtTemp << " from server." << '\n';
@@ -60,8 +59,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Waiting for server's ready response..." << '\n';
     bool ready = false;
     while (!ready) {
-        assert((mq_receive (qd_client, inbuf, MSG_BUFFER_SIZE, NULL)),
-            "Client: mq_recieve failed. What went wrong?");
+        listen(qd_client);
         // Whenever this fails or not largely depends on what's sent through the inbuf.
         try {
             bool response = stoi(inbuf); // Supposed to be 1 = true
@@ -91,14 +89,14 @@ int main() {
     // Create and open the server mq
     //  The client isn't even allowed to open if the server isn't running! That's convenient.
     assert((qd_server = mq_open(SERVER_QUEUE_NAME, O_WRONLY)),
-        "Client: mq_open(server) failed - Is the server running?");
+        processName + ": mq_open(server) failed - Is the server running?");
     // Create and open the client mq
     assert((qd_client = mq_open(client_queue_name, O_RDONLY | O_CREAT, QUEUE_PERMISSIONS, &attr)),
-        "Client: mq_open(client) failed - what went wrong?");
+        processName + ": mq_open(client) failed - what went wrong?");
     
     // After opening, connect the interrupt signal to the shutdown method
     // In case of something like ctrl+c termination
-    signal(SIGINT, shutdown_client_mq);
+    signal(SIGINT, ShutdownClientMQ);
 
     // Successful open
     cout << "Client and server mq successfully opened." << '\n';
@@ -107,5 +105,5 @@ int main() {
     GreetAndAwaitInitiationResponseFromServer();
 
     // Shutdown the client
-    shutdown_client_mq(0);
+    ShutdownClientMQ(0);
 }
