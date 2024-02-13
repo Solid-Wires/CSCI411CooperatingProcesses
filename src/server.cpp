@@ -49,11 +49,3 @@ int main() {
     // Shutdown the server.
     shutdown_server_mq(0);
 }
-problem.");
-
-    // After opening, connect the interrupt signal to the shutdown method
-    // In case of something like ctrl+c termination
-    signal(SIGINT, shutdown_server_mq);
-    
-    // Successful open
-    cout << "Server mq successfully opened." << 
