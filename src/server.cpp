@@ -33,7 +33,7 @@ void ShutdownServerMQ(int signum) {
     //  Each client handles their own mq's deletion
     for (string client : clients) {
         assert((mq_close(openClients[client])),
-            processName + ": Could not close client mq " + openClients[client] + "!");
+            processName + ": Could not close client mq " + client + "!");
     }
 
     // Successful shutdown via resource cleanup
