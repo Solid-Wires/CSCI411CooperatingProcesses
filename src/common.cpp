@@ -1,3 +1,4 @@
+#include "../inc/common.h"
 using namespace std;
 
 // Print out what the process is sending before sending it.
