@@ -44,7 +44,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Greeting server with identity " << client_queue_name << "..." << '\n';
 
     // Send the client's name over to the server
-    sprintf(outbuf, client_queue_name);
+    sprintf(outbuf, client_queue_name.c_str());
     send(qd_server);
 
     // Wait for a response from the server

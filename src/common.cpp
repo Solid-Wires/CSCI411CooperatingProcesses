@@ -44,7 +44,7 @@ void send(mqd_t mq_desc) {
         cout << pid << ": " << outbuf;
     }
     assert((mq_send(mq_desc, outbuf, strlen(outbuf) + 1, 0)),
-        processName + " failed to send a message to " + client);
+        processName + " failed to send a message.");
 }
 
 // Countdown to READY_WAIT_SEC
