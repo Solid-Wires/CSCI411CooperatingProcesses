@@ -57,7 +57,7 @@ void WaitForClients() {
     // Loop while there are less than 4 clients known.
     while (clients.size() < 4) {
         // Recieve a greeting from a client.
-        listen(qd_server)
+        listen(qd_server);
 
         // New client! Open up the descriptor and give them their temperature!
         clients.push_back(inbuf);
