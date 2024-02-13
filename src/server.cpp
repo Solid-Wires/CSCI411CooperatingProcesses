@@ -5,8 +5,8 @@
 using namespace std;
 
 // All known clients that greeted the server.
-vector<string> clients;
-map<string, mqd_t> openClients;
+vector<char[64]> clients;
+map<char[64], mqd_t> openClients;
 // Each client gets their initial temperature based on the order in when they greet the server.
 //  From earliest greeter to latest greeter.
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
