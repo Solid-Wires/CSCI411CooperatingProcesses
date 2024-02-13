@@ -9,10 +9,10 @@ all: directories programs
 
 # Make all of these directories if they don't exist
 directories:
-	mkdir -p "obj"
-	mkdir -p "obj/client"
-	mkdir -p "obj/server"
-	mkdir -p "obj/common"
+	@mkdir -p "obj"
+	@mkdir -p "obj/client"
+	@mkdir -p "obj/server"
+	@mkdir -p "obj/common"
 
 client_comp: src/client.cpp
 	gcc $(VERSION) -c src/client.cpp -o obj/client.o
