@@ -92,7 +92,11 @@ void RunUntilClientsAreStable() {
                     break;
                 // Assumption checking - The last temperature comparison was stable, but what about this one?
                 case 1:
-                    if (lastTempReceived == temperature) {
+                    // Since we're comparing floats, we can't have an exact comparison.
+                    //  Therefore, this makes an approximate comparison, where it's "good enough"
+                    //  if the difference is so unsubstantial.
+                    // Otherwise, the procedure would infinitely loop.
+                    if (abs(lastTempReceived - temperature) < 1e-4) {
                         // Don't change the code. Make this the last temperature received.
                         //  This doesn't mean that the clients are stable yet, though.
                         lastTempReceived = temperature;
