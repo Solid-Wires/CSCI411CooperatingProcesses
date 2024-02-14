@@ -49,10 +49,10 @@ void assert(int code, string why) {
 }
 
 // Sends a message from whatever is in outbuf to a given descriptor.
-void send(mqd_t mq_desc) {
+void send(mqd_t mq_desc, string toWho) {
     // Part of the assignment's reqs is to report every send
     if (REPORT_SEND) {
-        cout << pid << ": " << outbuf << '\n';
+        cout << toWho << ": " << outbuf << '\n';
     }
     assert((mq_send(mq_desc, outbuf, strlen(outbuf) + 1, 0)),
         processName + ": failed to send a message.");
