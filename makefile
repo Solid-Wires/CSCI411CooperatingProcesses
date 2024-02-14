@@ -16,7 +16,7 @@ REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 # All call
 all: directories programs
 
-# Make all of these directories if they don't exist (silent)
+# Make all of these directories if they don't exist
 directories:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(BIN_DIR)
@@ -39,11 +39,9 @@ programs: client_comp server_comp common_comps
 	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
 	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
 
+# Clean does a recursive removal of the bin and obj directories.
 .PHONY: clean
 clean:
-	rm -f $(BIN_DIR)/$(CLIENT)
-	rm -f $(BIN_DIR)/$(SERVER)
-	rm -f $(CLIENT_OBJ_DIR)/*.o
-	rm -f $(SERVER_OBJ_DIR)/*.o
-	rm -f $(COMMON_OBJ_DIR)/*.o
+	rm -rf $(OBJ_DIR)
+	rm -rf $(BIN_DIR)
 
