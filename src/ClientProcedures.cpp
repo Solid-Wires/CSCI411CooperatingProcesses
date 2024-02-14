@@ -27,7 +27,6 @@ void GreetAndAwaitInitiationResponseFromServer() {
     //  Both messages recieved are the server name and the client's temperature, assigned by the server.
     listen(qd_client);
 
-    listen(qd_client);
     // Client's external temperature has been received and initialized!
     clientExtTemp = stoi(inbuf);
     cout << "Received external temperature of " << clientExtTemp << " from server." << '\n';
