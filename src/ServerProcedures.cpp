@@ -108,7 +108,7 @@ void RunUntilClientsAreStable() {
         }
 
         // Calculate the new server central temperature.
-        serverCentralTemp = ((2 * serverCentralTemp) + tempsReceivedSum) / 6;
+        serverCentralTemp = ((2.0 * serverCentralTemp) + tempsReceivedSum) / 6.0;
 
         // Check against code received.
         if (code > 1) {

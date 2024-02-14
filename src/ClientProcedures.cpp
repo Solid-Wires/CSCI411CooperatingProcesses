@@ -60,5 +60,28 @@ void ListenForCentralTempAndUpdateExternalTemp() {
 
         // Listen for the server's response.
         listen(qd_client);
+        // Server's central temperature is expected
+        float receivedCentralTemp;
+        // Let's see if it's a float
+        try {
+            receivedCentralTemp = stof(inbuf);
+        } catch(...) {
+            // Then it's a string. Perhaps the end message?
+            if (inbuf == CLIENT_END_MESSAGE) {
+                // Procedure can end then.
+                shutdown = true;
+                continue;
+            }
+            else {
+                // What in the world is this message?
+                cout << client_queue_name << " received an unrecognized message..." << '\n';
+                cout << "The message received is: " << inbuf << '\n'; 
+            }
+        }
+        // Otherwise, at this point, the message must be the central temperature.
+        //  Update the external temperature of this client.
+        //      The procedure repeats to send this new temperature again until the server sends
+        //      the CLIENT_END_MESSAGE.
+        clientExtTemp = ((clientExtTemp * 3.0) + (2.0 * receivedCentralTemp)) / 5.0;
     }
 }
