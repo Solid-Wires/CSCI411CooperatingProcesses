@@ -26,9 +26,9 @@ directories:
 
 # Client and server object compilations
 client_comp: src/client.cpp
-	gcc $(VERSION) -c src/client.cpp -o $(CLIENT_OBJ_DIR)/client.o
+	gcc $(VERSION) -c src/client.cpp -o $(CLIENT_OBJ_DIR)/%.o
 server_comp: src/server.cpp
-	gcc $(VERSION) -c src/server.cpp -o $(SERVER_OBJ_DIR)/server.o
+	gcc $(VERSION) -c src/server.cpp -o $(SERVER_OBJ_DIR)/%.o
 
 # Common object compilation
 common_comps: src/common.cpp
@@ -39,7 +39,7 @@ programs: client_comp server_comp common_comps
 	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
 	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
 
-# Clean does a recursive removal of the bin and obj directories.
+# Clean does a recursive removal of the generated bin and obj directories.
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR)
