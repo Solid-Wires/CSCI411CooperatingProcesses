@@ -2,8 +2,9 @@
 CLIENT=client
 SERVER=server
 
-# Object directories
+# Directories
 OBJ_DIR=obj
+BIN_DIR=bin
 CLIENT_OBJ_DIR=$(OBJ_DIR)/client
 SERVER_OBJ_DIR=$(OBJ_DIR)/server
 COMMON_OBJ_DIR=$(OBJ_DIR)/common
@@ -18,6 +19,7 @@ all: directories programs
 # Make all of these directories if they don't exist (silent)
 directories:
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(BIN_DIR)
 	@mkdir -p $(CLIENT_OBJ_DIR)
 	@mkdir -p $(SERVER_OBJ_DIR)
 	@mkdir -p $(COMMON_OBJ_DIR)
@@ -34,8 +36,8 @@ common_comps: src/common.cpp
 
 # Program executable compilation
 programs: client_comp server_comp common_comps
-	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
-	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(SERVER) $(REAL_TIME_LIBRARY)
+	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
+	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
 
 .PHONY: clean
 clean:
