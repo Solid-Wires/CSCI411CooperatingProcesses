@@ -25,6 +25,7 @@ void SendToAllClients() {
 // This sends the shutdown message for the clients, which the clients understand.
 //  However, they must be running their main procedure to be able to listen for the shutdown message!
 void ShutdownClients() {
+    cout << "Sending shutdown signal to all clients..." << '\n';
     sprintf(outbuf, "%s", CLIENT_END_MESSAGE);
     SendToAllClients();
 }
