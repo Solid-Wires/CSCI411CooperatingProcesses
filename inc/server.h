@@ -6,8 +6,8 @@
 #define EXPECTED_CLIENTS 4
 
 // Server fields
-extern vector<std::string> clients;
-extern map<std::string, mqd_t> openClients;
+extern std::vector<std::string> clients;
+extern std::map<std::string, mqd_t> openClients;
 extern float initialClientTemps[EXPECTED_CLIENTS];
 extern float serverCentralTemp;
 
