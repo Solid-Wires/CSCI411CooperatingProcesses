@@ -45,7 +45,7 @@ void ShutdownMQ(int signum); // Defined on Client.cpp and Server.cpp
 void introduce(void);
 void assert(int code, std::string why);
 
-void send(mqd_t mq_desc, string toWho);
+void send(mqd_t mq_desc, std::string toWho);
 void listen(mqd_t mq_desc);
 
 void countdown(void);
