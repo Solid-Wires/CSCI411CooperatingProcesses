@@ -19,11 +19,6 @@ float ExternalTempCalculation(float centralTemp) {
 void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Greeting server with identity " << client_queue_name << "..." << '\n';
 
-    // The struct
-    MsgGreeting greeting;
-        greeting.identity = client_queue_name;
-        greeting.pid = pid;
-
     // Send the client's name over to the server
     sprintf(outbuf, "%s", client_queue_name);
     send(qd_server);
