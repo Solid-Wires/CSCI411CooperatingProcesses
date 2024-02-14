@@ -50,10 +50,7 @@ void WaitForClients() {
         int clientInitialTemp = initialClientTemps[clientIdx];
         cout << "Welcome! Shook hands with a new client named " << clients.back() << '\n';
 
-        //Send them the server's name and their assigned external temperature after the hand shake.
-        cout << "Sending the server's name over: " << serverName << '\n';
-        sprintf(outbuf, "%s", serverName);
-        send(qd_client, clients.back());
+        //Send them their assigned external temperature after the hand shake.
         cout << "Sending initial temperature: " << clientInitialTemp << '\n';
         sprintf(outbuf, NUMBER_FORMAT, clientInitialTemp);
         send(qd_client, clients.back());

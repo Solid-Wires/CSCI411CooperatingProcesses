@@ -21,14 +21,11 @@ void GreetAndAwaitInitiationResponseFromServer() {
 
     // Send the client's name over to the server
     sprintf(outbuf, "%s", client_queue_name);
-    send(qd_server, SERVER_QUEUE_NAME); // The server's name with its PID isn't known yet
+    send(qd_server, SERVER_QUEUE_NAME);
 
     // Wait for a response from the server
     //  Both messages recieved are the server name and the client's temperature, assigned by the server.
     listen(qd_client);
-    // Server's name is initially expected.
-    //  Now the client knows the server's full name.
-    serverName = inbuf;
 
     listen(qd_client);
     // Client's external temperature has been received and initialized!
@@ -65,7 +62,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
     while (!shutdown) {
         // Send your temperature to the server.
         sprintf(outbuf, NUMBER_FORMAT, clientExtTemp);
-        send(qd_server, serverName);
+        send(qd_server, SERVER_QUEUE_NAME);
 
         // Listen for the server's response.
         listen(qd_client);
