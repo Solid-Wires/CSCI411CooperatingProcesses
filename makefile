@@ -26,9 +26,9 @@ directories:
 
 # Client and server object compilations
 client_comp: src/client.cpp
-	gcc $(VERSION) -c src/client.cpp -o $(CLIENT_OBJ_DIR)/%.o
+	$(gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o, client)
 server_comp: src/server.cpp
-	gcc $(VERSION) -c src/server.cpp -o $(SERVER_OBJ_DIR)/%.o
+	$(gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o, server)
 
 # Common object compilation
 common_comps: src/common.cpp
