@@ -39,6 +39,10 @@ extern char inbuf [MSG_BUFFER_SIZE];
 extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
+// I didn't implement struct messages when I started, but I implemented 
+//  those here.
+extern struct MsgGreeting;
+
 // Common functions, mostly defined in Common.cpp
 void ShutdownMQ(int signum); // Defined on Client.cpp and Server.cpp
 
