@@ -66,7 +66,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
         try {
             receivedCentralTemp = stof(inbuf);
         } catch(...) {
-            // Then it's a string. Perhaps the end message?
+            // Then it's a string. Perhaps the shutdown message?
             if (inbuf == CLIENT_END_MESSAGE) {
                 // Procedure can end then.
                 shutdown = true;
@@ -84,4 +84,8 @@ void ListenForCentralTempAndUpdateExternalTemp() {
         //      the CLIENT_END_MESSAGE.
         clientExtTemp = ((clientExtTemp * 3.0) + (2.0 * receivedCentralTemp)) / 5.0;
     }
+
+    // Client is ready to shutdown. Although the message only ends this procedure - the actual
+    //  client shutdown is handled by Client.cpp
+    cout << "Client confirmed the shutdown message. Ending main procedure." << '\n';
 }
