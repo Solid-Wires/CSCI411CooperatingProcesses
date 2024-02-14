@@ -64,7 +64,12 @@ int main() {
 
     // First of all, let the server know that it exists and grab its temperature from it.
     GreetAndAwaitInitiationResponseFromServer();
+    // It waits for a bit for the server to send the ready signal.
 
-    // Shutdown the client
+    // After that, perform the client's main procedure.
+    ListenForCentralTempAndUpdateExternalTemp();
+
+    // Shutdown the client This is a good shutdown.
+    cout << '\n';
     ShutdownMQ(0);
 }

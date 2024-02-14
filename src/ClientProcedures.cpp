@@ -1,6 +1,12 @@
 #include "../inc/client.h"
 using namespace std;
 
+// Overview of the client's main procedure:
+//      1.) Send client external temperature
+//      2.) Await server response
+//          a.) Server responds with central temp - update external temp and repeat
+//          b.) Server respond with END - end the main procedure
+
 // The client greets the server with its name, then it awaits
 //  for the server to provide its temperature information. Once it
 //  receives that, it awaits for the server to tell it that it's ready
@@ -35,6 +41,24 @@ void GreetAndAwaitInitiationResponseFromServer() {
             ShutdownMQ(0);
         }
     }
-    
-    cout << "Server sent ready response. All clients are ready. Initiating temp calculation message sequence." << '\n';
+    cout << "Server sent ready response. All clients are ready." << '\n';
+}
+
+// ---------------- MAIN PROCEDURE ----------------
+// The client sends the temperature it has over to the server and awaits a response.
+//  If the response is a central temperature, update the client's external temperature.
+//  If the response is END, then the procedure ends.
+void ListenForCentralTempAndUpdateExternalTemp() {
+    cout << "Starting client's main procedure..." << '\n';
+
+    // Keep running until you receive a shutdown
+    bool shutdown = false;
+    while (!shutdown) {
+        // Send your temperature to the server.
+        sprintf(outbuf, "%0.1f", clientExtTemp);
+        send(qd_server);
+
+        // Listen for the server's response.
+        listen(qd_client);
+    }
 }

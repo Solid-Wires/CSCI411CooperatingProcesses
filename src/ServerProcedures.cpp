@@ -1,11 +1,27 @@
 #include "../inc/server.h"
 using namespace std;
 
+// Overview of the server's main procedure:
+//      1.) Listen for all client's temperature responses
+//      2.) Check temperatures and update a conditional code that states the following:
+//          0.) Initialize lastTemp for comparisons
+//          1.) The clients could be stable if their temps are equal
+//          2.) The clients are not stable because a condition on code 1 failed
+//      3.) If the clients are not stabilized, send the new central temperature over to all of them.
+//          Otherwise, the system is stabilized and the clients receive the shutdown message.
+
 // Send the outbuf message to all clients.
 void SendToAllClients() {
     for (string client : clients) {
         send(openClients[client]);
     }
+}
+
+// This sends the shutdown message for the clients, which the clients understand.
+//  However, they must be running their main procedure to be able to listen for the shutdown message!
+void ShutdownClients() {
+    sprintf(outbuf, "%s", CLIENT_END_MESSAGE);
+    SendToAllClients();
 }
 
 // The first procedure that the server should do is wait for all of the clients to
@@ -44,9 +60,13 @@ void WaitForClients() {
     cout << "Ready signal sent." << '\n';
 }
 
+// ---------------- MAIN PROCEDURE ----------------
 // Keep the server on standby, waiting for all of the clients' responses until it finds
 //  out that all 4 responses from the clients are stable temperatures.
 void RunUntilClientsAreStable() {
+    cout << "Starting server's main procedure..." << '\n';
+    
+    // Keeps running until clients are stabilized
     bool stabilized = false;
     while (!stabilized) {
         // All temperatures received are added into here
@@ -110,8 +130,7 @@ void RunUntilClientsAreStable() {
                 cout << "ERR: Undefined condition code." << '\n';
             }
             // Anyways, shut down the server and send shutdown message to all clients.
-            sprintf(outbuf, "%s", CLIENT_END_MESSAGE);
-            SendToAllClients();
+            ShutdownClients();
             ShutdownMQ(1);
         }
     }

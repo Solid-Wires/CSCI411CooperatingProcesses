@@ -70,6 +70,9 @@ int main() {
     // All clients have received their temperatures and now the server recognizes them.
     //  Now the server will listen and respond with temperature calculations from all clients.
     RunUntilClientsAreStable();
+
+    // The clients are allowed to shutdown now.
+    ShutdownClients();
     
     // Shutdown the server. This is a good shutdown.
     cout << '\n';

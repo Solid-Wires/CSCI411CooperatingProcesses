@@ -13,8 +13,8 @@ extern float serverCentralTemp;
 
 // Server functions, defined in ServerProcedures.cpp
 void SendToAllClients(void);
+void ShutdownClients(void);
 void WaitForClients(void);
 void RunUntilClientsAreStable(void);
-
 
 #endif

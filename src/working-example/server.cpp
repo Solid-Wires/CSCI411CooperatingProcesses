@@ -4,6 +4,11 @@
  *           with POSIX message queues
  */
 
+// POST-NOTE: These aren't actually used in this compilation, but rather this is the
+//  working example that you provided for us. You might see pieces of my comments trying
+//  to figure out how it's supposed to work. When I figured that out first, I then proceeded
+//  with the rest of the project.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

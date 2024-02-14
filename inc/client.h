@@ -12,5 +12,6 @@ extern float clientExtTemp;
 
 // Client functions, defined by ClientProcedures.cpp
 void GreetAndAwaitInitiationResponseFromServer(void);
+void ListenForCentralTempAndUpdateExternalTemp(void);
 
 #endif
