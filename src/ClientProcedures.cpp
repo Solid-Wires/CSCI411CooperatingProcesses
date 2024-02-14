@@ -60,7 +60,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
     bool shutdown = false;
     while (!shutdown) {
         // Send your temperature to the server.
-        sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, clientExtTemp);
+        sprintf(outbuf, NUMBER_FORMAT, clientExtTemp);
         send(qd_server);
 
         // Listen for the server's response.
@@ -93,7 +93,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
 
     // Client is ready to shutdown. Although the message only ends this procedure - the actual
     //  client shutdown is handled by Client.cpp
-    sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, clientExtTemp); // Just so I can format the final temp
+    sprintf(outbuf, NUMBER_FORMAT, clientExtTemp); // Just so I can format the final temp
     cout << "Client confirmed the shutdown message. Ending main procedure." << '\n';
     cout << client_queue_name << "'s final temperature was computed to be " << outbuf << '\n';
 }

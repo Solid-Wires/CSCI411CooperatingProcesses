@@ -52,7 +52,7 @@ void WaitForClients() {
 
         //Send them their temperature after the hand shake.
         cout << "\t Sending initial temperature: " << clientInitialTemp << "" << '\n';
-        sprintf(outbuf, "%.1f", clientInitialTemp);
+        sprintf(outbuf, NUMBER_FORMAT, clientInitialTemp);
         send(qd_client);
     }
 
@@ -123,7 +123,7 @@ void RunUntilClientsAreStable() {
         // Check against code received.
         if (code > 1) {
             // The clients are, in whatever capacity described, still unstable. Send them a new central temperature.
-            sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, serverCentralTemp);
+            sprintf(outbuf, NUMBER_FORMAT, serverCentralTemp);
             SendToAllClients();
         }
         else if (code == 1) {
@@ -146,7 +146,7 @@ void RunUntilClientsAreStable() {
     }
 
     // If we've left the loop, then all clients have successfully been synchronized. The temperatures are now stable.
-    sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, serverCentralTemp); // Just so I can format the final temp
+    sprintf(outbuf, NUMBER_FORMAT, serverCentralTemp); // Just so I can format the final temp
     cout << "All clients have successfully had their temperature stabilized." << '\n';
     cout << "The final central temperature was computed to be: " << outbuf << '\n';
 }
