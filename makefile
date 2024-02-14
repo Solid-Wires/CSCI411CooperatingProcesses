@@ -1,6 +1,8 @@
+# Executable names
 CLIENT=client
 SERVER=server
 
+# Object directories
 OBJ_DIR=obj
 CLIENT_OBJ_DIR=$(OBJ_DIR)/client
 SERVER_OBJ_DIR=$(OBJ_DIR)/server
@@ -10,6 +12,7 @@ COMMON_OBJ_DIR=$(OBJ_DIR)/common
 VERSION=-std=c++11
 REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 
+# All call
 all: directories programs
 
 # Make all of these directories if they don't exist (silent)
@@ -19,22 +22,26 @@ directories:
 	@mkdir -p $(SERVER_OBJ_DIR)
 	@mkdir -p $(COMMON_OBJ_DIR)
 
+# Client and server object compilations
 client_comp: src/client.cpp
 	gcc $(VERSION) -c src/client.cpp -o $(CLIENT_OBJ_DIR)/client.o
-
 server_comp: src/server.cpp
 	gcc $(VERSION) -c src/server.cpp -o $(SERVER_OBJ_DIR)/server.o
 
+# Common object compilation
 common_comps: src/common.cpp
 	gcc $(VERSION) -c src/common.cpp -o $(COMMON_OBJ_DIR)/common.o
 
+# Program executable compilation
 programs: client_comp server_comp common_comps
-	g++ obj/client.o $(COMMON_OBJ_DIR)/*.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
-	g++ obj/server.o  $(COMMON_OBJ_DIR)/*.o -o $(SERVER) $(REAL_TIME_LIBRARY)
+	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(CLIENT) $(REAL_TIME_LIBRARY)
+	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(SERVER) $(REAL_TIME_LIBRARY)
 
 .PHONY: clean
 clean:
 	rm -f $(CLIENT)
 	rm -f $(SERVER)
-	rm -f obj/*.o
+	rm -f $(CLIENT_OBJ_DIR)/*.o
+	rm -f $(SERVER_OBJ_DIR)/*.o
+	rm -f $(COMMON_OBJ_DIR)/*.o
 
