@@ -96,7 +96,7 @@ void RunUntilClientsAreStable() {
                     //  Therefore, this makes an approximate comparison, where it's "good enough"
                     //  if the difference is so unsubstantial.
                     // Otherwise, the procedure would infinitely loop.
-                    if (abs(lastTempReceived - temperature) < 1e-4) {
+                    if (abs((lastTempReceived - temperature)) < 1e-3) {
                         // Don't change the code. Make this the last temperature received.
                         //  This doesn't mean that the clients are stable yet, though.
                         lastTempReceived = temperature;
