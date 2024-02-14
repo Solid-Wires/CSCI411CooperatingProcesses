@@ -42,7 +42,10 @@ extern struct mq_attr attr;
 // I didn't implement struct messages when I started, but I implemented 
 //  those here.
 // Greeting messages for initialization of client and server contact
-struct MsgGreeting;
+struct MsgGreeting {
+    std::string identity;
+    int pid;
+};
 
 // Common functions, mostly defined in Common.cpp
 void ShutdownMQ(int signum); // Defined on Client.cpp and Server.cpp

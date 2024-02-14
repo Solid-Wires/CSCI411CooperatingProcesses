@@ -20,7 +20,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     cout << "Greeting server with identity " << client_queue_name << "..." << '\n';
 
     // The struct
-    struct MsgGreeting greeting;
+    MsgGreeting greeting;
         greeting.identity = client_queue_name;
         greeting.pid = pid;
 
