@@ -1,5 +1,7 @@
 # CSCI 411 Cooperating Processes Lab
 
+Jared Whytsell
+
 This assignment is having one server process listen to 4 client processes in order to stabilize all
 of their temperatures.
 
