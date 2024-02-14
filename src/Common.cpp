@@ -23,6 +23,10 @@ struct mq_attr attr = {
     .mq_msgsize = MAX_MSG_SIZE,
     .mq_curmsgs = 0
 };
+struct MsgGreeting {
+    std::string identity;
+    int pid;
+};
 
 // States the program's identity
 void introduce() {
