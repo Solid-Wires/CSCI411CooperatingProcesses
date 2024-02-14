@@ -32,6 +32,7 @@
 
 // Common fields
 extern mqd_t qd_server;
+extern std::string serverName;
 extern int pid;
 extern std::string processName;
 extern bool shuttingDown;

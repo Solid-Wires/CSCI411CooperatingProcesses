@@ -47,7 +47,8 @@ void ShutdownMQ(int signum) {
 int main() {
     // Get the pid and set name
     pid = getpid();
-    processName = SERVER_QUEUE_NAME;
+    processName = SERVER_QUEUE_NAME + "-" + to_string(pid);
+    serverName = processName;
     // Introduce yourself
     introduce();
 
