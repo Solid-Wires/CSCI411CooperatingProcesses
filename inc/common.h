@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 
 // Common constants
-#define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
+#define SERVER_QUEUE_NAME   "/jw-coop-processes-server-%d"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
 #define MAX_MESSAGES 10
 #define MAX_MSG_SIZE 256 // The messages probably don't need to be that big, but I'm keeping it this way so it still works
