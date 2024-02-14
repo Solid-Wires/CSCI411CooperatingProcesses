@@ -25,14 +25,17 @@ directories:
 	@mkdir -p $(COMMON_OBJ_DIR)
 
 # Client and server object compilations
+#	The subst function just replaces the % in the command with the name provided
 client_comp: src/client.cpp
-	$(subst %,client, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
+	$(subst %,Client, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
+	$(subst %,ClientProcedures, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 server_comp: src/server.cpp
-	$(subst %,server, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
+	$(subst %,Server, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
+	$(subst %,ServerProcedures, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 
 # Common object compilation
 common_comps: src/common.cpp
-	$(subst %,common, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
+	$(subst %,Common, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
 
 # Program executable compilation
 programs: client_comp server_comp common_comps

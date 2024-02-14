@@ -17,9 +17,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-// Definitions shard between the client and server.
-//  Both have read and write permissions, since they're going to
-//  be talking to each other.
+// Common constants
 #define SERVER_QUEUE_NAME   "/jw-coop-processes-server"
 #define QUEUE_PERMISSIONS 0660  // like chmod values, user and owner can read and write to queue
 #define MAX_MESSAGES 10
@@ -30,7 +28,7 @@
 #define REPORT_SEND true // Report every message sent before sending
 #define CLIENT_END_MESSAGE   "END"
 
-// Fields defined in common.cpp
+// Common fields
 extern mqd_t qd_server;
 extern int pid;
 extern std::string processName;
@@ -39,8 +37,8 @@ extern char inbuf [MSG_BUFFER_SIZE];
 extern char outbuf [MSG_BUFFER_SIZE];
 extern struct mq_attr attr;
 
-// Function prototypes, defined in common.cpp
-void ShutdownMQ(int signum); // This has a different contextual procedure on both instances
+// Common functions, mostly defined in Common.cpp
+void ShutdownMQ(int signum); // Defined on Client.cpp and Server.cpp
 
 void introduce(void);
 void assert(int code, std::string why);
