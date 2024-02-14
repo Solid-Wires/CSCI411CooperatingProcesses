@@ -26,13 +26,13 @@ directories:
 
 # Client and server object compilations
 client_comp: src/client.cpp
-	$(subst %, client, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
+	$(subst %,client, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 server_comp: src/server.cpp
-	$(subst %, server, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
+	$(subst %,server, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 
 # Common object compilation
 common_comps: src/common.cpp
-	$(subst %, common, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
+	$(subst %,common, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
 
 # Program executable compilation
 programs: client_comp server_comp common_comps
