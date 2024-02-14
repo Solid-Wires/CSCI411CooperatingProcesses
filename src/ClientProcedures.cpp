@@ -1,4 +1,4 @@
-#include "..inc/client.h"
+#include "../inc/client.h"
 using namespace std;
 
 // The client greets the server with its name, then it awaits
