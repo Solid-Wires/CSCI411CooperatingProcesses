@@ -19,3 +19,7 @@ The server process must run first before the client processes. After the server 
 After all 4 client processes are opened, the server begins a countdown and sends a ready signal for all clients to send their temperatures. The procedures described are ran until temperature stability is achieved across all clients. After finishing, the server sends an end message to all clients and both the client and server makes sure to clean up all mq resources that they used.
 
 NOTE: If at any point that either executable fails, then it tries to clean up queues anyways and shut down. You can also interrupt any process at any time and it will clear its resources.
+
+# Analysis
+
+From what I've observed, the clients and server will stabilize at a temperature unit of 40 given these initial external temperatures and formulas.
