@@ -55,7 +55,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
     bool shutdown = false;
     while (!shutdown) {
         // Send your temperature to the server.
-        sprintf(outbuf, "%0.1f", clientExtTemp);
+        sprintf(outbuf, "%0." + str(TEMP_DEC_PLACES) + "f", clientExtTemp);
         send(qd_server);
 
         // Listen for the server's response.

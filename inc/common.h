@@ -27,6 +27,7 @@
 #define READY_WAIT_SEC 5 // Count to this amount before proceeding with segments of procedures
 #define REPORT_SEND true // Report every message sent before sending
 #define CLIENT_END_MESSAGE   "END"
+#define TEMP_DEC_PLACES 8   // Display temperatures to 8 decimal places
 
 // Common fields
 extern mqd_t qd_server;
