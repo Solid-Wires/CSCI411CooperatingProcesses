@@ -10,7 +10,7 @@ SERVER_OBJ_DIR=$(OBJ_DIR)/server
 COMMON_OBJ_DIR=$(OBJ_DIR)/common
 
 # There we go, now it's compiling to the right version
-CC=cc
+GCC=gcc
 VERSION=-std=c++11
 REAL_TIME_LIBRARY=-lrt # Needed because of mqueue.h
 
@@ -28,20 +28,20 @@ directories:
 # Client and server object compilations
 #	The subst function just replaces the % in the command with the name provided
 client_comp: src/Client.cpp src/ClientProcedures.cpp
-	$(subst %,Client, $(CC) $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
+	$(subst %,Client, $(GCC) $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 	$(subst %,ClientProcedures, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 server_comp: src/Server.cpp src/ServerProcedures.cpp
-	$(subst %,Server, $(CC) $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
+	$(subst %,Server, $(GCC) $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 	$(subst %,ServerProcedures, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 
 # Common object compilation
 common_comp: src/Common.cpp
-	$(subst %,Common, $(CC) $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
+	$(subst %,Common, $(GCC) $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
 
 # Program executable compilation
 programs: client_comp server_comp common_comp
-	$(CC) $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
-	$(CC) $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
+	$(GCC) $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
+	$(GCC) $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
 
 # Clean does a recursive removal of the generated bin and obj directories.
 .PHONY: clean
