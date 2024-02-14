@@ -6,9 +6,9 @@
 #define CLIENT_QUEUE_NAME   "/jw-coop-processes-client-%d"
 
 // Client fields
-mqd_t qd_client;
-char client_queue_name[MAX_CLIENT_NAME_SIZE];
-float clientExtTemp;
+extern mqd_t qd_client;
+extern char client_queue_name[MAX_CLIENT_NAME_SIZE];
+extern float clientExtTemp;
 
 // Client functions, defined by ClientProcedures.cpp
 void GreetAndAwaitInitiationResponseFromServer(void);
