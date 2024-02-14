@@ -26,19 +26,19 @@ directories:
 
 # Client and server object compilations
 #	The subst function just replaces the % in the command with the name provided
-client_comp: src/client.cpp
+client_comp: src/Client.cpp src/ClientProcedures.cpp
 	$(subst %,Client, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 	$(subst %,ClientProcedures, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
-server_comp: src/server.cpp
+server_comp: src/Server.cpp src/ServerProcedures.cpp
 	$(subst %,Server, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 	$(subst %,ServerProcedures, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 
 # Common object compilation
-common_comps: src/common.cpp
+common_comp: src/Common.cpp
 	$(subst %,Common, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o)
 
 # Program executable compilation
-programs: client_comp server_comp common_comps
+programs: client_comp server_comp common_comp
 	g++ $(CLIENT_OBJ_DIR)/*.o $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(CLIENT) $(REAL_TIME_LIBRARY)
 	g++ $(SERVER_OBJ_DIR)/*.o  $(COMMON_OBJ_DIR)/*.o -o $(BIN_DIR)/$(SERVER) $(REAL_TIME_LIBRARY)
 
