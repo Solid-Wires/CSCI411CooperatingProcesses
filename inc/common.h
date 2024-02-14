@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <mqueue.h>
+#include <cmath>
 #include <cstring>
 #include <iostream>
 #include <unistd.h>
