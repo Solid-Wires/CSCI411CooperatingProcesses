@@ -10,6 +10,11 @@ using namespace std;
 //      3.) If the clients are not stabilized, send the new central temperature over to all of them.
 //          Otherwise, the system is stabilized and the clients receive the shutdown message.
 
+// This is the calculation for the central temperature of the server.
+float CentralTempCalculation(float extTempsSum) {
+    return ((2.0 * serverCentralTemp) + extTempsSum) / 6.0;
+}
+
 // Send the outbuf message to all clients.
 void SendToAllClients() {
     for (string client : clients) {
@@ -112,7 +117,7 @@ void RunUntilClientsAreStable() {
         }
 
         // Calculate the new server central temperature.
-        serverCentralTemp = ((2.0 * serverCentralTemp) + tempsReceivedSum) / 6.0;
+        serverCentralTemp = CentralTempCalculation(tempsReceivedSum);
 
         // Check against code received.
         if (code > 1) {

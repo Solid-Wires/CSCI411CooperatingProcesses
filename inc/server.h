@@ -12,6 +12,7 @@ extern float initialClientTemps[EXPECTED_CLIENTS];
 extern float serverCentralTemp;
 
 // Server functions, defined in ServerProcedures.cpp
+float CentralTempCalculation(float extTempsSum);
 void SendToAllClients(void);
 void ShutdownClients(void);
 void WaitForClients(void);

@@ -7,6 +7,11 @@ using namespace std;
 //          a.) Server responds with central temp - update external temp and repeat
 //          b.) Server respond with END - end the main procedure
 
+// This is the calculation for the external temperature of this client.
+float ExternalTempCalculation(float centralTemp) {
+    return ((clientExtTemp * 3.0) + (2.0 * centralTemp)) / 5.0;
+}
+
 // The client greets the server with its name, then it awaits
 //  for the server to provide its temperature information. Once it
 //  receives that, it awaits for the server to tell it that it's ready
@@ -83,7 +88,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
         //  Update the external temperature of this client.
         //      The procedure repeats to send this new temperature again until the server sends
         //      the CLIENT_END_MESSAGE.
-        clientExtTemp = ((clientExtTemp * 3.0) + (2.0 * receivedCentralTemp)) / 5.0;
+        clientExtTemp = ExternalTempCalculation(receivedCentralTemp);
     }
 
     // Client is ready to shutdown. Although the message only ends this procedure - the actual

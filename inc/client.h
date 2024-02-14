@@ -11,6 +11,7 @@ extern char client_queue_name[MAX_CLIENT_NAME_SIZE];
 extern float clientExtTemp;
 
 // Client functions, defined by ClientProcedures.cpp
+float ExternalTempCalculation(float centralTemp);
 void GreetAndAwaitInitiationResponseFromServer(void);
 void ListenForCentralTempAndUpdateExternalTemp(void);
 
