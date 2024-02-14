@@ -113,7 +113,7 @@ void RunUntilClientsAreStable() {
         // Check against code received.
         if (code > 1) {
             // The clients are, in whatever capacity described, still unstable. Send them a new central temperature.
-            sprintf(outbuf, "%." + to_string(TEMP_DEC_PLACES) + "f", serverCentralTemp);
+            sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, serverCentralTemp);
             SendToAllClients();
         }
         else if (code == 1) {
