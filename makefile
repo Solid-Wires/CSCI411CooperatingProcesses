@@ -41,8 +41,8 @@ programs: client_comp server_comp common_comps
 
 .PHONY: clean
 clean:
-	rm -f $(CLIENT)
-	rm -f $(SERVER)
+	rm -f $(BIN_DIR)/$(CLIENT)
+	rm -f $(BIN_DIR)/$(SERVER)
 	rm -f $(CLIENT_OBJ_DIR)/*.o
 	rm -f $(SERVER_OBJ_DIR)/*.o
 	rm -f $(COMMON_OBJ_DIR)/*.o
