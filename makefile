@@ -32,7 +32,7 @@ server_comp: src/server.cpp
 
 # Common object compilation
 common_comps: src/common.cpp
-	(patsubst %, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o, common)
+	$(patsubst %, gcc $(VERSION) -c src/%.cpp -o $(COMMON_OBJ_DIR)/%.o, common)
 
 # Program executable compilation
 programs: client_comp server_comp common_comps
