@@ -88,5 +88,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
 
     // Client is ready to shutdown. Although the message only ends this procedure - the actual
     //  client shutdown is handled by Client.cpp
+    sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, clientExtTemp); // Just so I can format the final temp
     cout << "Client confirmed the shutdown message. Ending main procedure." << '\n';
+    cout << client_queue_name << "'s final temperature was computed to be " << outbuf << '\n';
 }
