@@ -11,7 +11,7 @@ mqd_t qd_client;
 char client_queue_name[MAX_CLIENT_NAME_SIZE];
 // This specific client's external temperature. It isn't initialized until
 //  the server responds to it.
-float clientExtTemp;
+int clientExtTemp;
 
 // Shuts down the client mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain

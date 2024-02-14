@@ -8,8 +8,8 @@ using namespace std;
 //          b.) Server respond with END - end the main procedure
 
 // This is the calculation for the external temperature of this client.
-float ExternalTempCalculation(float centralTemp) {
-    return ((clientExtTemp * 3.0) + (2.0 * centralTemp)) / 5.0;
+int ExternalTempCalculation(int centralTemp) {
+    return ((clientExtTemp * 3) + (2 * centralTemp)) / 5;
 }
 
 // The client greets the server with its name, then it awaits
@@ -28,7 +28,7 @@ void GreetAndAwaitInitiationResponseFromServer() {
     //  the server.
     listen(qd_client);
     // Client's external temperature has been received and initialized!
-    clientExtTemp = stof(inbuf);
+    clientExtTemp = stoi(inbuf);
     cout << "Received external temperature of " << clientExtTemp << " from server." << '\n';
 
     // Keep listening for the server to say the clients are ready.
@@ -66,7 +66,7 @@ void ListenForCentralTempAndUpdateExternalTemp() {
         // Listen for the server's response.
         listen(qd_client);
         // Server's central temperature is expected
-        float receivedCentralTemp;
+        int receivedCentralTemp;
         // Let's see if it's a float
         try {
             receivedCentralTemp = stof(inbuf);

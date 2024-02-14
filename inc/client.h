@@ -8,10 +8,10 @@
 // Client fields
 extern mqd_t qd_client;
 extern char client_queue_name[MAX_CLIENT_NAME_SIZE];
-extern float clientExtTemp;
+extern int clientExtTemp;
 
 // Client functions, defined by ClientProcedures.cpp
-float ExternalTempCalculation(float centralTemp);
+int ExternalTempCalculation(float centralTemp);
 void GreetAndAwaitInitiationResponseFromServer(void);
 void ListenForCentralTempAndUpdateExternalTemp(void);
 

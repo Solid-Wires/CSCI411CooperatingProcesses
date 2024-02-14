@@ -8,11 +8,11 @@
 // Server fields
 extern std::vector<std::string> clients;
 extern std::map<std::string, mqd_t> openClients;
-extern float initialClientTemps[EXPECTED_CLIENTS];
-extern float serverCentralTemp;
+extern int initialClientTemps[EXPECTED_CLIENTS];
+extern int serverCentralTemp;
 
 // Server functions, defined in ServerProcedures.cpp
-float CentralTempCalculation(float extTempsSum);
+int CentralTempCalculation(float extTempsSum);
 void SendToAllClients(void);
 void ShutdownClients(void);
 void WaitForClients(void);

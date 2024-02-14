@@ -11,8 +11,8 @@ using namespace std;
 //          Otherwise, the system is stabilized and the clients receive the shutdown message.
 
 // This is the calculation for the central temperature of the server.
-float CentralTempCalculation(float extTempsSum) {
-    return ((2.0 * serverCentralTemp) + extTempsSum) / 6.0;
+int CentralTempCalculation(int extTempsSum) {
+    return ((2 * serverCentralTemp) + extTempsSum) / 6;
 }
 
 // Send the outbuf message to all clients.
@@ -76,10 +76,10 @@ void RunUntilClientsAreStable() {
     bool stabilized = false;
     while (!stabilized) {
         // All temperatures received are added into here
-        float tempsReceivedSum = 0;
+        int tempsReceivedSum = 0;
         // The conditional procedure for whenever or not the clients are stable.
         //  Let's assume that they are stable - then disprove or approve of this assumption.
-        float lastTempReceived;
+        int lastTempReceived;
         int code = 0; // Check off of a condition code: 0 means initial, 1 means stable, 2 means unstable
 
         // Listen from itself from all clients
@@ -87,7 +87,7 @@ void RunUntilClientsAreStable() {
         //  And also perform stability checking
         for (string client : clients) {
             listen(qd_server);
-            float temperature = stof(inbuf);
+            int temperature = stoi(inbuf);
             switch(code) {
                 // Skip this entirely - it was figured out before that the system is unstable.
                 case 2: break;
@@ -102,7 +102,7 @@ void RunUntilClientsAreStable() {
                     //  Therefore, this makes an approximate comparison, where it's "good enough"
                     //  if the difference is so unsubstantial.
                     // Otherwise, the procedure would infinitely loop.
-                    if (fabs((lastTempReceived - temperature)) < 1e-3) {
+                    if (temperature == lastTempReceived) {
                         // Don't change the code. Make this the last temperature received.
                         //  This doesn't mean that the clients are stable yet, though.
                         lastTempReceived = temperature;

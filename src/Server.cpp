@@ -12,11 +12,11 @@ map<string, mqd_t> openClients;
 //  From earliest greeter to latest greeter.
 //  NOTE: This is exclusive to the server instance - the clients don't know their temperatures yet!
 // If EXPECTED_CLIENTS is changed, you must add or remove new initialized temperatures here!
-float initialClientTemps[EXPECTED_CLIENTS] = {100.0, 22.0, 50.0, 40.0};
+int initialClientTemps[EXPECTED_CLIENTS] = {100, 22, 50, 40};
 
 // The central server temp. It is initialized to 0 right now because it isn't known until it
 //  receives all 4 of the clients' temps.
-float serverCentralTemp = 0;
+int serverCentralTemp = 0;
 
 // Shuts down the server mq. Called via either interrupt signal or manual call.
 //  This helps clean up any resources that the message queue used, so that it doesn't strain
