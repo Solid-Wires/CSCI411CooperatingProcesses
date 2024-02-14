@@ -47,7 +47,7 @@ void WaitForClients() {
             "Server: mq_open(client) failed - what went wrong?");
         mqd_t qd_client = openClients[clients.back()];
         int clientIdx = clients.size() - 1;
-        float clientInitialTemp = initialClientTemps[clientIdx];
+        int clientInitialTemp = initialClientTemps[clientIdx];
         cout << "Welcome! Shook hands with a new client named " << clients.back() << '\n';
 
         //Send them their temperature after the hand shake.
