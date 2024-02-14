@@ -29,10 +29,10 @@ directories:
 #	The subst function just replaces the % in the command with the name provided
 client_comp: src/Client.cpp src/ClientProcedures.cpp
 	$(subst %,Client, $(CC) $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
-	$(subst %,ClientProcedures, gcc $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
+	$(subst %,ClientProcedures, $(CC) $(VERSION) -c src/%.cpp -o $(CLIENT_OBJ_DIR)/%.o)
 server_comp: src/Server.cpp src/ServerProcedures.cpp
 	$(subst %,Server, $(CC) $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
-	$(subst %,ServerProcedures, gcc $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
+	$(subst %,ServerProcedures, $(CC) $(VERSION) -c src/%.cpp -o $(SERVER_OBJ_DIR)/%.o)
 
 # Common object compilation
 common_comp: src/Common.cpp
