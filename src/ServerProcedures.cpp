@@ -140,6 +140,7 @@ void RunUntilClientsAreStable() {
     }
 
     // If we've left the loop, then all clients have successfully been synchronized. The temperatures are now stable.
+    sprintf(outbuf, FLOAT_DEC_PLACES_FORMAT, serverCentralTemp); // Just so I can format the final temp
     cout << "All clients have successfully had their temperature stabilized." << '\n';
-    cout << "The final central temperature was computed to be: " << serverCentralTemp << '\n';
+    cout << "The final central temperature was computed to be: " << outbuf << '\n';
 }
