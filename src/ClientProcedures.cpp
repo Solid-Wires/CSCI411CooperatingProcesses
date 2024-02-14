@@ -67,7 +67,8 @@ void ListenForCentralTempAndUpdateExternalTemp() {
             receivedCentralTemp = stof(inbuf);
         } catch(...) {
             // Then it's a string. Perhaps the shutdown message?
-            if (inbuf == CLIENT_END_MESSAGE) {
+            string msg = inbuf;
+            if (strcmp(inbuf, CLIENT_END_MESSAGE) == 0) { // char[] and str comparisons
                 // Procedure can end then.
                 shutdown = true;
                 continue;
