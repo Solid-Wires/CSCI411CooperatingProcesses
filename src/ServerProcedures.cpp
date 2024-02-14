@@ -18,7 +18,7 @@ int CentralTempCalculation(int extTempsSum) {
 // Send the outbuf message to all clients.
 void SendToAllClients() {
     for (string client : clients) {
-        send(openClients[client]);
+        send(openClients[client], client);
     }
 }
 
@@ -53,7 +53,7 @@ void WaitForClients() {
         //Send them their assigned external temperature after the hand shake.
         cout << "Sending initial temperature: " << clientInitialTemp << '\n';
         sprintf(outbuf, NUMBER_FORMAT, clientInitialTemp);
-        send(qd_client);
+        send(qd_client, clients.back());
     }
 
     // Server is now ready to get started.
